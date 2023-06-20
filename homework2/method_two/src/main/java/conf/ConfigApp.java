@@ -5,23 +5,12 @@ import models.Dog;
 import models.Parrot;
 import models.Person;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
+@ComponentScan(basePackages = "models")
 public class ConfigApp {
-    @Bean
-    public Cat cat(){
-        var c = new Cat();
-        c.setName("Vasya");
-        return c;
-    }
-    @Bean
-    public Dog dog(){
-        var d = new Dog();
-        d.setName("Sharik");
-        return d;
-    }
-
     @Bean
     public Parrot parrot_one(){
         var p = new Parrot();
@@ -36,10 +25,4 @@ public class ConfigApp {
         return p;
     }
 
-    @Bean
-    public Person person(){
-        var p = new Person(cat(), dog(), parrot_one(), parrot_two());
-        p.setName("Oleg");
-        return p;
-    }
 }

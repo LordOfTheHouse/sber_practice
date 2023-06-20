@@ -1,12 +1,17 @@
 package models;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
+
+@Component
 public class Person {
-    public Person(Cat cat, Dog dog, Parrot parrot_one, Parrot parrot_two) {
-        this.cat = cat;
-        this.dog = dog;
+    public Person(@Qualifier("parrot_one")Parrot parrot_one, @Qualifier("parrot_two")Parrot parrot_two) {
         this.parrot_one = parrot_one;
         this.parrot_two = parrot_two;
     }
+
+
 
     @Override
     public String toString() {
@@ -27,10 +32,11 @@ public class Person {
         this.name = name;
     }
 
+
     public Cat getCat() {
         return cat;
     }
-
+    @Autowired
     public void setCat(Cat cat) {
         this.cat = cat;
     }
@@ -38,7 +44,7 @@ public class Person {
     public Dog getDog() {
         return dog;
     }
-
+    @Autowired
     public void setDog(Dog dog) {
         this.dog = dog;
     }
