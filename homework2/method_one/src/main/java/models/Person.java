@@ -4,8 +4,8 @@ public class Person {
     public Person(Cat cat, Dog dog, Parrot parrot_one, Parrot parrot_two) {
         this.cat = cat;
         this.dog = dog;
-        this.parrot_one = parrot_one;
-        this.parrot_two = parrot_two;
+        this.parrotOne = parrot_one;
+        this.parrotTwo = parrot_two;
     }
 
     @Override
@@ -14,8 +14,8 @@ public class Person {
                 "name='" + name + '\'' +
                 ", cat=" + cat.getName() +
                 ", dog=" + dog.getName() +
-                ", parrot_one=" + parrot_one.getName() +
-                ", parrot_two=" + parrot_two.getName() +
+                ", parrot_one=" + parrotOne.getName() +
+                ", parrot_two=" + parrotTwo.getName() +
                 '}';
     }
 
@@ -44,24 +44,24 @@ public class Person {
     }
 
     public Parrot getParrot_one() {
-        return parrot_one;
+        return parrotOne;
     }
 
     public void setParrot_one(Parrot parrot_one) {
-        this.parrot_one = parrot_one;
+        this.parrotOne = parrotOne;
     }
 
     public Parrot getParrot_two() {
-        return parrot_two;
+        return parrotTwo;
     }
 
-    public void setParrot_two(Parrot parrot_two) {
-        this.parrot_two = parrot_two;
+    public void setParrot_two(Parrot parrotTwo) {
+        this.parrotTwo = parrotTwo;
     }
 
     private String name;
     private Cat cat;
     private Dog dog;
-    private Parrot parrot_one;
-    private Parrot parrot_two;
+    private Parrot parrotOne;
+    private Parrot parrotTwo;
 }
