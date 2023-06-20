@@ -12,14 +12,14 @@ import org.springframework.context.annotation.Configuration;
 @ComponentScan(basePackages = "models")
 public class ConfigApp {
     @Bean
-    public Parrot parrot_one(){
+    public Parrot parrotOne(){
         var p = new Parrot();
         p.setName("Kuk");
         return p;
     }
 
     @Bean
-    public Parrot parrot_two(){
+    public Parrot parrotTwo(){
         var p = new Parrot();
         p.setName("Kok");
         return p;
