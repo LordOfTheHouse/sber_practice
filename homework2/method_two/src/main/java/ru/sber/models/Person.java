@@ -1,4 +1,4 @@
-package models;
+package ru.sber.models;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -6,21 +6,17 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Person {
-    public Person(@Qualifier("parrotOne")Parrot parrotOne, @Qualifier("parrotTwo")Parrot parrotTwo) {
+
+    private String name;
+    private Cat cat;
+    private Dog dog;
+    private Parrot parrotOne;
+    private Parrot parrotTwo;
+
+    public Person(@Qualifier("Andrei")Parrot parrotOne, @Qualifier("Koko")Parrot parrotTwo) {
         this.parrotOne = parrotOne;
         this.parrotTwo = parrotTwo;
 
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", cat=" + cat.getName() +
-                ", dog=" + dog.getName() +
-                ", parrot_one=" + parrotOne.getName() +
-                ", parrot_two=" + parrotTwo.getName() +
-                '}';
     }
 
     public String getName() {
@@ -63,9 +59,15 @@ public class Person {
         this.parrotTwo = parrotTwo;
     }
 
-    private String name;
-    private Cat cat;
-    private Dog dog;
-    private Parrot parrotOne;
-    private Parrot parrotTwo;
+
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", cat=" + cat.getName() +
+                ", dog=" + dog.getName() +
+                ", parrot_one=" + parrotOne.getName() +
+                ", parrot_two=" + parrotTwo.getName() +
+                '}';
+    }
 }

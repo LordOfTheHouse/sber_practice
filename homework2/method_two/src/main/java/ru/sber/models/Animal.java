@@ -1,4 +1,5 @@
-package models;
+package ru.sber.models;
+
 
 public abstract class Animal {
     private String name;

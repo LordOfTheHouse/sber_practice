@@ -1,19 +1,18 @@
-package models;
+package ru.sber.models;
 
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 
 @Component
-public class Cat extends Animal{
-
+public class Dog extends Animal{
     @PostConstruct
     public void init() {
-        setName("Vasya");
+        setName("Sharik");
     }
     @Override
     public void say() {
         super.say();
-        System.out.println("i'm cat");
+        System.out.println("i'm dog");
     }
 }
