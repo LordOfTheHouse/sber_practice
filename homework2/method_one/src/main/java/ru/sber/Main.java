@@ -1,10 +1,10 @@
 package ru.sber;
 
-import conf.ConfigApp;
-import models.Cat;
-import models.Dog;
-import models.Parrot;
-import models.Person;
+import ru.sber.conf.ConfigApp;
+import ru.sber.models.Cat;
+import ru.sber.models.Dog;
+import ru.sber.models.Parrot;
+import ru.sber.models.Person;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 public class Main {

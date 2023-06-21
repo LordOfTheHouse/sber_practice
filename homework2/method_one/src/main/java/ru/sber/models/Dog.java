@@ -1,4 +1,4 @@
-package models;
+package ru.sber.models;
 
 public class Dog extends Animal{
     @Override
