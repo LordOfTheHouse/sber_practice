@@ -9,9 +9,8 @@ import ru.sber.model.DataForTransfer;
  */
 @Component
 public class TransferByPhoneAppProxy {
-    public void transferSum(Client client, DataForTransfer dataForTransfer) {
-        System.out.println("Клиенту: " + client.getName()
-                + " по номеру телефона: " + dataForTransfer.getNumberPhone()
+    public void transferSum(DataForTransfer dataForTransfer) {
+        System.out.println("По номеру телефона: " + dataForTransfer.getNumberPhone()
                 + " совершен перевод на сумму: " + dataForTransfer.getSum()
         );
     }

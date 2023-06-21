@@ -29,13 +29,13 @@ public class ApplicationService {
         this.transferRepository = transferRepository;
     }
 
-    public void transferPayment(Client client, DataForTransfer dataForTransfer)
+    public void transferPayment(DataForTransfer dataForTransfer)
             throws UserIsNotAClientOfTheBank {
-        if (!bankClientAppProxy.isClient(client)) {
+        if (!bankClientAppProxy.isClient(dataForTransfer)) {
             throw new UserIsNotAClientOfTheBank("Пользователь не является клиентом банка");
         }
-        transferByPhoneAppProxy.transferSum(client, dataForTransfer);
-        transferRepository.insertTransferInBD(client, dataForTransfer);
+        transferByPhoneAppProxy.transferSum(dataForTransfer);
+        transferRepository.insertTransferInBD(dataForTransfer);
     }
 
 }

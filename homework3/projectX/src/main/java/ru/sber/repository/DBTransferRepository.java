@@ -14,15 +14,13 @@ import java.util.Map;
  */
 @Repository
 public class DBTransferRepository {
-    private List<Map<Client, DataForTransfer>> transfers = new ArrayList<>();
+    private List<DataForTransfer> transfers = new ArrayList<>();
 
-    public void insertTransferInBD(Client client, DataForTransfer dataForTransfer) {
+    public void insertTransferInBD(DataForTransfer dataForTransfer) {
         System.out.println("Информация о переводе по номеру телефона: " + dataForTransfer.getNumberPhone()
                 + " на сумму: " + dataForTransfer.getSum()
                 + " добавлена в базу данных"
         );
-        Map<Client, DataForTransfer> data = new HashMap<>();
-        data.put(client, dataForTransfer);
-        transfers.add(data);
+        transfers.add(dataForTransfer);
     }
 }
