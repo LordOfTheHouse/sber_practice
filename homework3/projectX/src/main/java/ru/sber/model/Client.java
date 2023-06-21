@@ -31,9 +31,4 @@ public class Client {
     public String getPhoneNumber() {
         return phoneNumber;
     }
-
-    @Override
-    public int hashCode() {
-        return (int) userId;
-    }
 }

@@ -1,13 +1,11 @@
 package ru.sber.repository;
 
 import org.springframework.stereotype.Repository;
-import ru.sber.model.Client;
 import ru.sber.model.DataForTransfer;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * База Данных. Хранит информацию о совершенных переводах

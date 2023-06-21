@@ -3,7 +3,6 @@ package ru.sber.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.sber.exception.UserIsNotAClientOfTheBank;
-import ru.sber.model.Client;
 import ru.sber.model.DataForTransfer;
 import ru.sber.proxy.BankClientAppProxy;
 import ru.sber.proxy.TransferByPhoneAppProxy;
