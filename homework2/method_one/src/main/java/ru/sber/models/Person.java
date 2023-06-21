@@ -1,22 +1,18 @@
 package models;
 
 public class Person {
+
+    private String name;
+    private Cat cat;
+    private Dog dog;
+    private Parrot parrotOne;
+    private Parrot parrotTwo;
+
     public Person(Cat cat, Dog dog, Parrot parrot_one, Parrot parrot_two) {
         this.cat = cat;
         this.dog = dog;
         this.parrotOne = parrot_one;
         this.parrotTwo = parrot_two;
-    }
-
-    @Override
-    public String toString() {
-        return "Person{" +
-                "name='" + name + '\'' +
-                ", cat=" + cat.getName() +
-                ", dog=" + dog.getName() +
-                ", parrot_one=" + parrotOne.getName() +
-                ", parrot_two=" + parrotTwo.getName() +
-                '}';
     }
 
     public String getName() {
@@ -59,9 +55,16 @@ public class Person {
         this.parrotTwo = parrotTwo;
     }
 
-    private String name;
-    private Cat cat;
-    private Dog dog;
-    private Parrot parrotOne;
-    private Parrot parrotTwo;
+    @Override
+    public String toString() {
+        return "Person{" +
+                "name='" + name + '\'' +
+                ", cat=" + cat.getName() +
+                ", dog=" + dog.getName() +
+                ", parrot_one=" + parrotOne.getName() +
+                ", parrot_two=" + parrotTwo.getName() +
+                '}';
+    }
+
+
 }
