@@ -5,6 +5,9 @@ import ru.sber.model.Client;
 
 import java.util.List;
 
+/**
+ * Стороннее приложение. Предоставляет информацю о клиентах банка
+ */
 @Component
 public class BankClientAppProxy {
     private List<Client> clientList = List.of(

@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * База Данных. Хранит информацию о совершенных переводах
+ */
 @Repository
 public class DBTransferRepository {
     private List<Map<Client, DataForTransfer>> transfers = new ArrayList<>();

@@ -1,5 +1,8 @@
 package ru.sber.model;
 
+/**
+ * Клиент
+ */
 public class Client {
 
     private String name;

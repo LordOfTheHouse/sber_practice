@@ -9,6 +9,10 @@ import ru.sber.proxy.BankClientAppProxy;
 import ru.sber.proxy.TransferByPhoneAppProxy;
 import ru.sber.repository.DBTransferRepository;
 
+
+/**
+ * Наше приложение
+ */
 @Service
 public class ApplicationService {
 

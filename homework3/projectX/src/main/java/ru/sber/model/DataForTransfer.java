@@ -3,6 +3,9 @@ package ru.sber.model;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+/**
+ * Информация для перевода
+ */
 public class DataForTransfer {
     private String numberPhone;
     private BigDecimal sum;

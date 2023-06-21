@@ -16,6 +16,9 @@ public class Main {
         var context = new AnnotationConfigApplicationContext(AppConfig.class);
         ApplicationService applicationService = context.getBean(ApplicationService.class);
         try {
+            applicationService.transferPayment(new Client("Sergei", 1),
+                    new DataForTransfer("89535121588", BigDecimal.valueOf(1000), LocalDate.now()
+                    ));
             applicationService.transferPayment(new Client("Sergei", 5),
                     new DataForTransfer("89535121588", BigDecimal.valueOf(1000), LocalDate.now()
                     ));
