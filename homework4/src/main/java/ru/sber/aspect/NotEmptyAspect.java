@@ -3,13 +3,11 @@ package ru.sber.aspect;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
 import org.springframework.util.CollectionUtils;
 import ru.sber.exceptions.ArgumentIsNullException;
 import ru.sber.exceptions.CollectionArgumentIsEmptyException;
 import ru.sber.exceptions.StringArgumentIsEmptyException;
 
-import java.lang.reflect.UndeclaredThrowableException;
 import java.util.Collection;
 import java.util.logging.Logger;
 
@@ -43,4 +41,5 @@ public class NotEmptyAspect {
     public void setLogger(Logger logger) {
         this.logger = logger;
     }
+
 }

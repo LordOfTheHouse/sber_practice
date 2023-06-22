@@ -23,7 +23,7 @@ import static org.mockito.Mockito.verify;
 
 
 @ExtendWith(SpringExtension.class)
-@ContextConfiguration(classes = { ru.sber.config.ProjectConfig.class })
+@ContextConfiguration(classes = {ru.sber.config.ProjectConfig.class})
 public class AppTest {
     private Logger serviceLogger;
     private Logger aspectLogger;
@@ -31,6 +31,7 @@ public class AppTest {
     private ListFriendsServiceInterface listFriendsService;
     @Autowired
     private NotEmptyAspect notEmptyAspect;
+
     @BeforeEach
     public void before() {
         this.serviceLogger = mock(Logger.class);
