@@ -43,14 +43,14 @@ public class AppTest {
     }
 
     @Test
-    @DisplayName("Провека корректного имени и номера телефона")
+    @DisplayName("Проверка корректного имени и номера телефона")
     public void testIsFriendByNameAndPhone() {
         boolean result = listFriendsService.isFriend("Oleg", "111");
         Assertions.assertTrue(result);
     }
 
     @Test
-    @DisplayName("Провека корректного uid")
+    @DisplayName("Проверка корректного uid")
     public void testIsFriendByUid() {
         boolean result = listFriendsService.isFriend(1L);
         Assertions.assertTrue(result);

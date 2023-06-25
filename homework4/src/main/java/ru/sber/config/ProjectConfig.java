@@ -7,12 +7,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import ru.sber.aspect.NotEmptyAspect;
 
 @Configuration
-@ComponentScan(basePackages = {"ru.sber.service"})
+@ComponentScan(basePackages = {"ru.sber.service", "ru.sber.aspect"})
 @EnableAspectJAutoProxy
 public class ProjectConfig {
-    @Bean
-    public NotEmptyAspect notEmptyAspect() {
-        return new NotEmptyAspect();
-    }
 
 }
