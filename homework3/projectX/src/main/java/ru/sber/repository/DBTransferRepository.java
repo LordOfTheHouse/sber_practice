@@ -11,7 +11,7 @@ import java.util.List;
  * База Данных. Хранит информацию о совершенных переводах
  */
 @Repository
-public class DBTransferRepository {
+public class DBTransferRepository implements TransferRepository{
     private List<DataForTransfer> transfers = new ArrayList<>();
 
     public void insertTransferInBD(DataForTransfer dataForTransfer) {

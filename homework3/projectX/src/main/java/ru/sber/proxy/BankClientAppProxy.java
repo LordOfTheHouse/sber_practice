@@ -10,7 +10,7 @@ import java.util.List;
  * Стороннее приложение. Предоставляет информацю о клиентах банка
  */
 @Component
-public class BankClientAppProxy {
+public class BankClientAppProxy implements BankClientAppProxyInterface{
     private List<Client> clientList = List.of(
             new Client("Sergei", 1, "89535121588"),
             new Client("Oleg", 2, "89535121587"),
@@ -18,14 +18,7 @@ public class BankClientAppProxy {
     );
 
     public boolean isClient(DataForTransfer dataForTransfer) {
-        for (Client cl : clientList) {
-            if (cl.getPhoneNumber().equals(dataForTransfer.getNumberPhone())) {
-                System.out.println("Пользователь является клиентом банка");
-                return true;
-            }
-        }
-        System.out.println("Пользователь не является клиентом банка");
-        return false;
+        return clientList.stream().anyMatch(client -> client.getPhoneNumber().equals(dataForTransfer.getNumberPhone()));
     }
 
     ;

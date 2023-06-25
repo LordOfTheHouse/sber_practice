@@ -13,16 +13,16 @@ import ru.sber.repository.DBTransferRepository;
  * Наше приложение
  */
 @Service
-public class ApplicationService {
+public class TransferService implements TransferServiceInterface{
 
     private BankClientAppProxy bankClientAppProxy;
     private TransferByPhoneAppProxy transferByPhoneAppProxy;
     private DBTransferRepository transferRepository;
 
     @Autowired
-    public ApplicationService(BankClientAppProxy bankClientAppProxy,
-                              TransferByPhoneAppProxy transferByPhoneAppProxy,
-                              DBTransferRepository transferRepository) {
+    public TransferService(BankClientAppProxy bankClientAppProxy,
+                           TransferByPhoneAppProxy transferByPhoneAppProxy,
+                           DBTransferRepository transferRepository) {
         this.bankClientAppProxy = bankClientAppProxy;
         this.transferByPhoneAppProxy = transferByPhoneAppProxy;
         this.transferRepository = transferRepository;
