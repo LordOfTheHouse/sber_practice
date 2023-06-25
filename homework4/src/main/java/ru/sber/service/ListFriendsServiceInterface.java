@@ -8,7 +8,7 @@ import java.util.logging.Logger;
 /**
  * Сервис по проверке списка друзей
  */
-interface ListFriendsServiceInterface {
+public interface ListFriendsServiceInterface {
     /**
      * Проверяет есть ли у пользователя друг с данным uid
      *
