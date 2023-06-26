@@ -40,6 +40,7 @@ public class NovelService implements NovelServiceInterface{
 
     @Override
     public List<Novel> searchNovel(String name){
+        if(name == null) return novels;
         return novels.stream()
                 .filter(novel -> novel.getTitle().matches("(?i).*"+name.strip()+".*"))
                 .collect(Collectors.toList());

@@ -31,10 +31,7 @@ public class MainController {
 
   @GetMapping("/novels")
   public String viewProducts(@RequestParam(required = false) String name, Model model) {
-
-    if(name != null){
-      model.addAttribute("novels", novelService.searchNovel(name));
-    }
+    model.addAttribute("novels", novelService.searchNovel(name));
     return "novels_search.html";
   }
 
@@ -44,6 +41,7 @@ public class MainController {
           Model model
   ) {
     if(name != null) return viewProducts(name, model);
+    model.addAttribute("novels", novelService.searchNovel(""));
     return "home2.html";
   }
 
