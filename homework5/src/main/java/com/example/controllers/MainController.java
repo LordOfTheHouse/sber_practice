@@ -24,23 +24,32 @@ public class MainController {
 
   private final NovelService novelService;
 
-
   public MainController(NovelService novelService) {
     this.novelService = novelService;
   }
 
+  /**
+   * Отображает страницу novels
+   * @param name - наименование новеллы
+   * @return название html файла - страницы сайта
+   */
   @GetMapping("/novels")
-  public String viewProducts(@RequestParam(required = false) String name, Model model) {
+  public String viewNovels(@RequestParam(required = false) String name, Model model) {
     model.addAttribute("novels", novelService.searchNovel(name));
     return "novels_search.html";
   }
 
+  /**
+   * Отображает страницу home
+   * @param name - наименование новеллы
+   * @return название html файла - страницы сайта
+   */
   @GetMapping("/home")
-  public String addProduct(
+  public String viewHome(
           @RequestParam(required = false) String name,
           Model model
   ) {
-    if(name != null) return viewProducts(name, model);
+    if(name != null) return viewNovels(name, model);
     model.addAttribute("novels", novelService.searchNovel(""));
     return "home2.html";
   }
