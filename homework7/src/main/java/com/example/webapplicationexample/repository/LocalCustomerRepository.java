@@ -21,16 +21,13 @@ public class LocalCustomerRepository implements CustomerRepository{
         this.cartRepository = cartRepository;
     }
 
-    List<Customer> customers = new ArrayList<>(
-            List.of(
-                    new Customer(1, "Lary","garry", "pass", "ke@a.ru",
-                            new Cart(1L, new ArrayList<>(), "1123"))));
+    List<Customer> customers = new ArrayList<>();
 
     @Override
     public long registration(Customer customer) {
         long id = generateId();
         customer.setId(id);
-        customer.setCart(cartRepository.generate());
+        customer.setCart(cartRepository.generate(id));
         customers.add(customer);
         return id;
     }

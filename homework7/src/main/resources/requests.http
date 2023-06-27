@@ -11,10 +11,10 @@ Content-Type: application/json
 }
 
 ###
-GET localhost:8080/customers/268140
+GET localhost:8080/customers/845808
 
 ###
-DELETE localhost:8080/customers/268140
+DELETE localhost:8080/customers/845808
 
 ###
 POST localhost:8080/products
@@ -22,7 +22,8 @@ Content-Type: application/json
 
 {
   "name": "Морковь",
-  "price": 70
+  "price": 70,
+  "amount": 1
 }
 
 ###
@@ -37,7 +38,7 @@ Content-Type: application/json
 }
 
 ###
-DELETE localhost:8080/products/123
+DELETE localhost:8080/products/2
 
 ###
 GET localhost:8080/products/1
@@ -46,7 +47,7 @@ GET localhost:8080/products/1
 GET localhost:8080/products?name=Морковь
 
 ###
-POST localhost:8080/carts/131898
+POST localhost:8080/carts/454547
 Content-Type: application/json
 
 {
@@ -55,7 +56,7 @@ Content-Type: application/json
 }
 
 ###
-PUT localhost:8080/carts/783367/product/291219
+PUT localhost:8080/carts/454547/product/2
 Content-Type: application/json
 
 {
@@ -63,15 +64,15 @@ Content-Type: application/json
 }
 
 ###
-DELETE localhost:8080/carts/1/products/1
+DELETE localhost:8080/carts/454547/products/2
 
 ###
 POST localhost:8080/payment
 Content-Type: application/json
 
 {
-  "sum": 10,
-  "idUser": 268140
+  "sum": 666,
+  "idUser": 127551
 
 }
 

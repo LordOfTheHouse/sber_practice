@@ -14,7 +14,7 @@ import java.util.Random;
  */
 @Repository
 public class LocalCartRepository implements CartRepository{
-    List<Cart> carts = new ArrayList<>(List.of(new Cart(1L, new ArrayList<>(), "11")));
+    private List<Cart> carts = new ArrayList<>();
 
     @Override
     public Optional<Cart> addProductInCartById(long id, Product product) {
@@ -50,16 +50,11 @@ public class LocalCartRepository implements CartRepository{
         return false;
     }
 
-    public Cart generate(){
-        Cart cart = new Cart(generateId(), new ArrayList<>(), "");
+    @Override
+    public Cart generate(long id){
+        Cart cart = new Cart(id, new ArrayList<>(), "");
         carts.add(cart);
         return cart;
     }
 
-    private long generateId() {
-        Random random = new Random();
-        int low = 1;
-        int high = 1_000_000;
-        return random.nextLong(high - low) + low;
-    }
 }

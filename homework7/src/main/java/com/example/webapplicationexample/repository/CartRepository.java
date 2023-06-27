@@ -38,6 +38,6 @@ public interface CartRepository {
      * Генерирует простую корзину
      * @return корзину
      */
-    Cart generate();
+    Cart generate(long id);
 
 }
