@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -50,6 +51,7 @@ public class MainController {
           Model model
   ) {
     if(name != null) return viewNovels(name, model);
+
     model.addAttribute("novels", novelService.searchNovel(""));
     return "home2.html";
   }

@@ -77,72 +77,11 @@
 
         
     <div class="row">
-        <div class="col">
+        <div class="col"  th:each="iter: ${#numbers.sequence(0,6)}" th:if="${iter} < 6">
             <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/31479.jpg" alt="Card image cap" style="height: 220px;">
+                <img class="card-img-top" th:src="${novels[iter].img}" alt="Card image cap" style="height: 220px;">
                 <div class="card-body">
-                    <h5 class="card-title">Lord of the Magical Beasts</h5>
-                    
-                </div>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/anata.png" alt="Card image cap" style="height: 220px;">
-                <div class="card-body">
-                    <h5 class="card-title">Anata wo Akiramekirenai Moto Iinazuke ja Dame desu ka?</h5>
-                </div>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/inoru.png" alt="Card image cap" style="height: 220px;">
-                <div class="card-body">
-                    <h5 class="card-title">Inoru Kami Wo Sirazu, Negau Kokoro no Katachi wo Miezu</h5>
-                </div>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/ankoku.png" alt="Card image cap" style="height: 220px;">
-                <div class="card-body">
-                    <h5 class="card-title">Ankoku Kishi to Issho!</h5>
-                </div>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/asahina.png" alt="Card image cap" style="height: 220px;">
-                <div class="card-body">
-                    <h5 class="card-title">Asahina Wakaba to Marumaru na Kareshi</h5>
-                </div>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/boku.jpg" alt="Card image cap" style="height: 220px;">
-                <div class="card-body">
-                    <h5 class="card-title">Boku no Kanojo Sensei</h5>
+                    <h5 class="card-title" th:text="${novels[iter].title}"></h5>
                 </div>
                 <div class="card-footer" align="center">
                     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
@@ -159,77 +98,17 @@
       
 
     <div class="row">
-        <div class="col">
-            <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/bokutachi.png" alt="Card image cap" style="height: 220px;">
-                <div class="card-body">
-                    <h5 class="card-title">Bokutachi wa Benkyou ga Dekinai</h5>
-                </div>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
+        <div class="col"  th:each="iter: ${#numbers.sequence(0,6)}" th:if="${iter} < 6">
+        <div class="card h-100" style="width: 10rem;">
+            <img class="card-img-top" th:src="${novels[iter].img}" alt="Card image cap" style="height: 220px;">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${novels[iter].title}"></h5>
+            </div>
+            <div class="card-footer" align="center">
+                <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
             </div>
         </div>
-
-        <div class="col">
-            <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/inkya.png" alt="Card image cap" style="height: 220px;">
-                <div class="card-body">
-                    <h5 class="card-title">Inkyara na Ore to Ichatsukitai tte Maji kayo</h5>
-                </div>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/inoru.png" alt="Card image cap" style="height: 220px;">
-                <div class="card-body">
-                    <h5 class="card-title">Inoru Kami Wo Sirazu, Negau Kokoro no Katachi wo Miezu</h5>
-                </div>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/kibishii.png" alt="Card image cap" style="height: 220px;">
-                <div class="card-body">
-                    <h5 class="card-title">Kibishii Onna Joushi ga Koukousei ni Modottara Ore ni Dere Dere suru Riyuu</h5>
-                </div>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/boku.jpg" alt="Card image cap" style="height: 220px;">
-                <div class="card-body">
-                    <h5 class="card-title">Boku no Kanojo Sensei</h5>
-                </div>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/anata.png" alt="Card image cap" style="height: 220px;">
-                <div class="card-body">
-                    <h5 class="card-title">Anata wo Akiramekirenai Moto Iinazuke ja Dame desu ka?</h5>
-                </div>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
+    </div>
 
       </div>
 
@@ -240,71 +119,11 @@
       
 
     <div class="row">
-        <div class="col">
+        <div class="col"  th:each="iter: ${#numbers.sequence(0,6)}" th:if="${iter} < 6">
             <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/ankoku.png" alt="Card image cap" style="height: 220px;">
+                <img class="card-img-top" th:src="${novels[iter].img}" alt="Card image cap" style="height: 220px;">
                 <div class="card-body">
-                    <h5 class="card-title">Ankoku Kishi to Issho!</h5>
-                </div>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/31479.jpg" alt="Card image cap" style="height: 220px;">
-                <div class="card-body">
-                    <h5 class="card-title">Lord of the Magical Beasts</h5>
-                </div>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/inkya.png" alt="Card image cap" style="height: 220px;">
-                <div class="card-body">
-                    <h5 class="card-title">Inkyara na Ore to Ichatsukitai tte Maji kayo</h5>
-                </div>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/boku.jpg" alt="Card image cap" style="height: 220px;">
-                <div class="card-body">
-                    <h5 class="card-title">Boku no Kanojo Sensei</h5>
-                </div>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/ankoku.png" alt="Card image cap" style="height: 220px;">
-                <div class="card-body">
-                    <h5 class="card-title">Ankoku Kishi to Issho!</h5>
-                </div>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="col">
-            <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" src="/img/anata.png" alt="Card image cap" style="height: 220px;">
-                <div class="card-body">
-                    <h5 class="card-title">Anata wo Akiramekirenai Moto Iinazuke ja Dame desu ka?</h5>
+                    <h5 class="card-title" th:text="${novels[iter].title}"></h5>
                 </div>
                 <div class="card-footer" align="center">
                     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
@@ -317,29 +136,22 @@
         <h1 align="center" style="margin-top: 10px; margin-bottom: 10px;">Последнии обновления</h1>
       </div>
 
-    <div class="card mb-3 w-100" style="position: relative;">
+    <div class="card mb-3 w-100" style="position: relative;" th:each="novel: ${novels}">
         <div class="row g-0">
             <div class="col-md-4" style="max-width: 250px;">
-                <img src="/img/anata.png" style="max-width: 250px;" alt="...">
+                <img th:src="${novel.img}" style="max-width: 250px;" alt="...">
             </div>
         <div class="col-md-8">
             <div class="card-body">
-                <h5 class="card-title">Anata wo Akiramekirenai Moto Iinazuke ja Dame desu ka?</h5>
-                <p class="card-text">Широки Цубаса и  Нана - туда, где ваша заурядная пара друзей детства. 
-                    Но после того, как их родители решили объявить их женихами, они оба стали 
-                    лучше относиться друг к другу, и как раз в тот момент, когда их должен был 
-                    ожидать милый и трогательный роман — Нанато был вынужден уехать со своей матерью!
-                </p>
+                <h5 class="card-title" th:text="${novel.title}"></h5>
+                <p class="card-text" th:text="${novel.description}"></p>
                 <p>
-                    <a href="#" class="pe-auto" data-toggle="modal" data-target="#searchModal">37 глава </a>
+                    <a href="#" class="pe-auto" data-toggle="modal" data-target="#searchModal">1 глава </a>
                 </p>
-                <span class="badge badge-primary">Drama</span>
-                <span class="badge badge-secondary">Romance</span>
-                <span class="badge badge-success">Horror</span>
-                <span class="badge badge-danger">Harem</span>
-                <span class="badge badge-light text-dark">Love</span>
-                <p class="card-text">
-                    <small class="text-muted">Последнее обновление 3 минуты назад</small>
+                <a th:each="tag: ${novel.tags}">
+                    <span class="badge badge-primary" th:text="${tag}"></span>
+                </a>
+                <p class="card-text"> <span class="text-muted" th:text="${#dates.format(novel.getDateTo(), 'dd-MMM-yyyy')}"></span>
                 </p>
                 <div class="card-footer" align="center">
                     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
@@ -348,72 +160,7 @@
         </div>
         </div>
     </div>
-    <div class="card mb-3 w-100" style="position: relative;">
-        <div class="row g-0">
-            <div class="col-md-4" style="max-width: 250px;">
-                <img src="/img/bokutachi.png" style="max-width: 250px;" alt="...">
-            </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                <h5 class="card-title">Bokutachi wa Benkyou ga Dekinai</h5>
-                <p class="card-text">
-                                    Нариюки Юига, ученик с оценками выше среднего, был назначен репетитором 
-                                    для трёх гениев, каждый из которых был лучшим в своём предмете, 
-                                    чтобы получить стипендию и не платить за образование в будущем. 
-                                    Казалось бы, чему нужно обучать гениев? А всё не так просто, ведь, 
-                                    как оказалось, каждый гений был хорош исключительно в своём предмете, 
-                                    а про другие — вообще слыхом не слыхивал.
-                </p>
-                <p>
-                    <a href="#" class="pe-auto" data-toggle="modal" data-target="#searchModal">3 том(complite)</a>
-                </p>
-                <span class="badge badge-primary">Drama</span>
-                <span class="badge badge-secondary">Romance</span>
-                <span class="badge badge-success">Horror</span>
-                <span class="badge badge-danger">Harem</span>
-                <span class="badge badge-light text-dark">Love</span>
-                 <p class="card-text">
-                    <small class="text-muted">Последнее обновление 7 минут назад</small>
-                </p>
-                <div class="card-footer" align="center">
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
-        </div>
-    </div>
-    <div class="card mb-3 w-100" style="position: relative;">
-        <div class="row g-0">
-            <div class="col-md-4" style="max-width: 250px;">
-                <img src="img/yememiru.png" style="max-width: 250px;" alt="...">
-            </div>
-        <div class="col-md-8">
-            <div class="card-body">
-                <h5 class="card-title">Yumemiru Danshi wa Genjitsushugisha</h5>
-                <p class="card-text">
-                    Саджо Ватару увлечен своей одноклассницей Нацукавой Айкой до такой степени, 
-                    что он живет в мечтах об их взаимной любви и отношениях, безжалостно приближаясь 
-                    к ней при каждом удобном случае. Однако однажды Ватару очнётся, и ему придется 
-                    столкнуться с реальностью.
-                </p>
-                <p>
-                    <a href="#" class="pe-auto" data-toggle="modal" data-target="#searchModal">7 глава</a>
-                </p>
-                <span class="badge badge-primary">Drama</span>
-                <span class="badge badge-secondary">Romance</span>
-                <span class="badge badge-success">Horror</span>
-                <span class="badge badge-danger">Harem</span>
-                <span class="badge badge-light text-dark">Love</span>
-                <p class="card-text">
-                    <small class="text-muted">Последнее обновление 13 минут назад</small>
-                </p>
-                <div class="card-footer" align="center" >
-                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
-                </div>
-            </div>
-        </div>
-        </div>
-    </div>
+
     <nav aria-label="Page navigation example">
         <ul class="pagination justify-content-center">
         <li class="page-item disabled">

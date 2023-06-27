@@ -1,5 +1,8 @@
 package com.example.models;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,6 +15,7 @@ public class Novel {
     private String img;
     private String description;
     private List<String> tags;
+    private Date dateTo;
 
     public Novel(String title, String description, List<String> tags) {
         uid = secondUid++;
@@ -19,6 +23,7 @@ public class Novel {
         this.description = description;
         this.tags = tags;
         img = "/img/w.svg";
+        dateTo = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     public Novel(String title, String description, String img, List<String> tags) {
@@ -27,6 +32,7 @@ public class Novel {
         this.description = description;
         this.tags = tags;
         this.img = img;
+        dateTo = Date.from(LocalDate.now().atStartOfDay(ZoneId.systemDefault()).toInstant());
     }
 
     public long getUid() {
@@ -63,5 +69,9 @@ public class Novel {
 
     public void setTags(List<String> tags) {
         this.tags = tags;
+    }
+
+    public Date getDateTo() {
+        return dateTo;
     }
 }
