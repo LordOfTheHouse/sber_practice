@@ -51,7 +51,9 @@ public class MainController {
           Model model
   ) {
     if(name != null) return viewNovels(name, model);
-
+    model.addAttribute("top_month", novelService.getTopMonth());
+    model.addAttribute("top_week", novelService.getTopWeek());
+    model.addAttribute("top_day", novelService.getTopDay());
     model.addAttribute("novels", novelService.searchNovel(""));
     return "home2.html";
   }

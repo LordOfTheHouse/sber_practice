@@ -53,9 +53,9 @@
             <img src="/img/01.png" class="d-block w-100" alt="Third slide">
             <div class="carousel-caption d-none d-md-block">
                 <h5 class="text-dark fs-1 nav-link">Boku no Kanojo Sensei</h5>
-                <span class="badge badge-secondary text-primary">Romance</span>
-                <span class="badge badge-success text-danger">Horror</span>
-                <span class="badge badge-light text-dark">Love</span>
+                <span class="badge badge-secondary">Romance</span>
+                <span class="badge badge-success">Horror</span>
+                <span class="badge badge-light">Love</span>
               </div>
     </div>
         
@@ -79,9 +79,9 @@
     <div class="row">
         <div class="col"  th:each="iter: ${#numbers.sequence(0,6)}" th:if="${iter} < 6">
             <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" th:src="${novels[iter].img}" alt="Card image cap" style="height: 220px;">
+                <img class="card-img-top" th:src="${top_month[iter].img}" alt="Card image cap" style="height: 220px;">
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${novels[iter].title}"></h5>
+                    <h5 class="card-title" th:text="${top_month[iter].title}"></h5>
                 </div>
                 <div class="card-footer" align="center">
                     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
@@ -100,9 +100,9 @@
     <div class="row">
         <div class="col"  th:each="iter: ${#numbers.sequence(0,6)}" th:if="${iter} < 6">
         <div class="card h-100" style="width: 10rem;">
-            <img class="card-img-top" th:src="${novels[iter].img}" alt="Card image cap" style="height: 220px;">
+            <img class="card-img-top" th:src="${top_week[iter].img}" alt="Card image cap" style="height: 220px;">
             <div class="card-body">
-                <h5 class="card-title" th:text="${novels[iter].title}"></h5>
+                <h5 class="card-title" th:text="${top_week[iter].title}"></h5>
             </div>
             <div class="card-footer" align="center">
                 <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
@@ -121,9 +121,9 @@
     <div class="row">
         <div class="col"  th:each="iter: ${#numbers.sequence(0,6)}" th:if="${iter} < 6">
             <div class="card h-100" style="width: 10rem;">
-                <img class="card-img-top" th:src="${novels[iter].img}" alt="Card image cap" style="height: 220px;">
+                <img class="card-img-top" th:src="${top_day[iter].img}" alt="Card image cap" style="height: 220px;">
                 <div class="card-body">
-                    <h5 class="card-title" th:text="${novels[iter].title}"></h5>
+                    <h5 class="card-title" th:text="${top_day[iter].title}"></h5>
                 </div>
                 <div class="card-footer" align="center">
                     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Читать</a>
