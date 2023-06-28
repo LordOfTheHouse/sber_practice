@@ -1,6 +1,5 @@
 package com.example.webapplicationexample.repository;
 
-import com.example.webapplicationexample.model.Cart;
 import com.example.webapplicationexample.model.Customer;
 import org.springframework.stereotype.Repository;
 

@@ -11,6 +11,6 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 public class Transfer {
-    BigDecimal sum;
+    private String numberCart;
     long idUser;
 }
