@@ -5,8 +5,7 @@ create table katerniuksm.product
     id    integer generated always as identity
         primary key,
     name  varchar(255) not null,
-    price numeric      not null,
-    count integer      not null
+    price numeric      not null
 );
 
 create table katerniuksm.cart

@@ -3,6 +3,7 @@ package com.example.webapplicationexample.repository;
 import com.example.webapplicationexample.model.Cart;
 import com.example.webapplicationexample.model.Product;
 
+import java.math.BigDecimal;
 import java.util.Optional;
 
 /**
@@ -39,5 +40,12 @@ public interface CartRepository {
      * @return корзину
      */
     Cart generate(long id);
+
+    /**
+     * Возвращает сумму которую должен заплатит пользователь за покупку всех товаров
+     * @param userId - индификуатор пользователя
+     * @return сумму
+     */
+    BigDecimal getSumPriceCart(long userId);
 
 }

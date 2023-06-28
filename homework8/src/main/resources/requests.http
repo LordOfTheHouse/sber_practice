@@ -72,7 +72,7 @@ Content-Type: application/json
 
 {
   "numberCart": "1111",
-  "idUser": 10
+  "idUser": 9
 
 }
 

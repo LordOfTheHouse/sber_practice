@@ -4,6 +4,7 @@ import com.example.webapplicationexample.model.Cart;
 import com.example.webapplicationexample.model.Product;
 import org.springframework.stereotype.Repository;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -53,6 +54,11 @@ public class LocalCartRepository implements CartRepository{
         Cart cart = new Cart(id, new ArrayList<>(), "lol");
         carts.add(cart);
         return cart;
+    }
+
+    @Override
+    public BigDecimal getSumPriceCart(long userId) {
+        return null;
     }
 
 }

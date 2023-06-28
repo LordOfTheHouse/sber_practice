@@ -1,5 +1,6 @@
 package com.example.webapplicationexample.repository;
 
+import com.example.webapplicationexample.exception.AccountNotDefined;
 import com.example.webapplicationexample.model.Cart;
 import com.example.webapplicationexample.model.Customer;
 import com.example.webapplicationexample.model.Product;
@@ -44,26 +45,29 @@ public class DBCartRepository implements CartRepository{
                where id_cart =? and id_product=?; 
                 """;
         try (var connection = DriverManager.getConnection(JDBC);
-             var prepareStatement = connection.prepareStatement(insertCast, Statement.RETURN_GENERATED_KEYS);
-             var prepareStatement1 = connection.prepareStatement(selectCast);
-             var prepareStatement2 = connection.prepareStatement(selectProduct);
-             var prepareStatement3 = connection.prepareStatement(updateCast)){
-            prepareStatement.setLong(1, product.getId());
-            prepareStatement.setLong(2, cartId);
-            prepareStatement.setInt(3, product.getAmount());
-            prepareStatement2.setLong(1, cartId);
-            prepareStatement2.setLong(2, product.getId());
-            if(prepareStatement2.executeQuery().next()){
-                prepareStatement3.setLong(1, product.getAmount());
-                prepareStatement3.setLong(2, cartId);
-                prepareStatement3.setLong(3, product.getId());
-                prepareStatement3.executeUpdate();
+             var insertProductStatement = connection.prepareStatement(insertCast, Statement.RETURN_GENERATED_KEYS);
+             var selectProductInCartStatement = connection.prepareStatement(selectCast);
+             var selectProductStatement = connection.prepareStatement(selectProduct);
+             var updateProductStatement = connection.prepareStatement(updateCast)){
+
+            insertProductStatement.setLong(1, product.getId());
+            insertProductStatement.setLong(2, cartId);
+            insertProductStatement.setInt(3, product.getAmount());
+            
+            selectProductStatement.setLong(1, cartId);
+            selectProductStatement.setLong(2, product.getId());
+            
+            if(selectProductStatement.executeQuery().next()){
+                updateProductStatement.setLong(1, product.getAmount());
+                updateProductStatement.setLong(2, cartId);
+                updateProductStatement.setLong(3, product.getId());
+                updateProductStatement.executeUpdate();
             } else {
-                prepareStatement.executeUpdate();
+                insertProductStatement.executeUpdate();
             }
 
-            prepareStatement1.setLong(1, cartId);
-            var resultProducts = prepareStatement1.executeQuery();
+            selectProductInCartStatement.setLong(1, cartId);
+            var resultProducts = selectProductInCartStatement.executeQuery();
 
             while (resultProducts.next()) {
 
@@ -95,14 +99,14 @@ public class DBCartRepository implements CartRepository{
                where id_cart=? and id_product=?;
                 """;
         try (var connection = DriverManager.getConnection(JDBC);
-             var prepareStatement = connection.prepareStatement(updateCast);
-             var prepareStatement1 = connection.prepareStatement(selectCast)){
-            prepareStatement.setLong(1, amount);
-            prepareStatement.setLong(2, idCart);
-            prepareStatement.setLong(3, idProduct);
-            prepareStatement.executeUpdate();
-            prepareStatement1.setLong(1, idCart);
-            var resultProducts = prepareStatement1.executeQuery();
+             var selectCastStatement = connection.prepareStatement(updateCast);
+             var updateCastStatement = connection.prepareStatement(selectCast)){
+            selectCastStatement.setLong(1, amount);
+            selectCastStatement.setLong(2, idCart);
+            selectCastStatement.setLong(3, idProduct);
+            selectCastStatement.executeUpdate();
+            updateCastStatement.setLong(1, idCart);
+            var resultProducts = updateCastStatement.executeQuery();
             while (resultProducts.next()) {
                 String nameProduct = resultProducts.getString("name");
                 BigDecimal priceProduct = BigDecimal.valueOf(resultProducts.getDouble("price"));
@@ -153,6 +157,47 @@ public class DBCartRepository implements CartRepository{
                 throw new RuntimeException("Ошибка при получении идентификатора");
             }
 
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public BigDecimal getSumPriceCart(long userId) {
+        String selectSum = """
+                select sum(p.price*pc.count) sum
+                from katerniuksm.client c
+                join katerniuksm.product_client pc on pc.id_cart = c.cart_id
+                join katerniuksm.product p on p.id = pc.id_product
+                where c.id = ?;
+                """;
+
+        String countUser = """ 
+                select count(*) client
+                from katerniuksm.client
+                where id = ?;
+                """;
+
+        try (var connection = DriverManager.getConnection(JDBC);
+             var selectSumStatement = connection.prepareStatement(selectSum);
+             var countUserStatement = connection.prepareStatement(countUser)){
+            countUserStatement.setLong(1, userId);
+            selectSumStatement.setLong(1, userId);
+            var act =  countUserStatement.executeQuery();
+            if(act.next()){
+                int isUser = act.getInt("client");
+                if(isUser == 0){
+                    throw new AccountNotDefined("Пользователь не определен");
+                }
+            }
+            var resultProducts = selectSumStatement.executeQuery();
+            if(resultProducts.next()) {
+                double sum = resultProducts.getDouble("sum");
+                if (sum != 0) {
+                    return BigDecimal.valueOf(sum);
+                }
+            }
+            throw new AccountNotDefined("Нет товара для оплаты");
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

@@ -20,7 +20,7 @@ import java.util.Optional;
 public class DBCustomerRepository implements CustomerRepository {
     public static final String JDBC = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres";
 
-    private CartRepository cartRepository;
+    private final CartRepository cartRepository;
 
     public DBCustomerRepository(CartRepository cartRepository) {
         this.cartRepository = cartRepository;
@@ -72,14 +72,13 @@ public class DBCustomerRepository implements CustomerRepository {
                 """;
 
         List<Product> products = new ArrayList<>();
-
         try (var connection = DriverManager.getConnection(JDBC);
-             var prepareStatement = connection.prepareStatement(selectUser);
-             var prepareStatement1 = connection.prepareStatement(selectCast)) {
+             var selectUserStatement = connection.prepareStatement(selectUser);
+             var selectCastStatement = connection.prepareStatement(selectCast)) {
 
-            prepareStatement.setLong(1, id);
+            selectUserStatement.setLong(1, id);
 
-            var resultSet = prepareStatement.executeQuery();
+            var resultSet = selectUserStatement.executeQuery();
 
             if (resultSet.next()) {
                 log.info("rabotaet 1");
@@ -88,8 +87,8 @@ public class DBCustomerRepository implements CustomerRepository {
                 var email = resultSet.getString("email");
                 var idCart = resultSet.getInt("cart_id");
 
-                prepareStatement1.setLong(1, idCart);
-                var resultProducts = prepareStatement1.executeQuery();
+                selectCastStatement.setLong(1, idCart);
+                var resultProducts = selectCastStatement.executeQuery();
                 while (resultProducts.next()) {
                     int idProduct = resultProducts.getInt("p.id");
                     String nameProduct = resultProducts.getString("p.name");
@@ -111,7 +110,7 @@ public class DBCustomerRepository implements CustomerRepository {
     @Override
     public boolean deleteById(long id) {
 
-        var selectIdCast = """
+        var selectIdCart = """
                 SELECT cart_id  
                 FROM katerniuksm.client 
                 where id = ?
@@ -133,25 +132,24 @@ public class DBCustomerRepository implements CustomerRepository {
                 """;
 
         try (var connection = DriverManager.getConnection(JDBC);
-             var prepareStatement = connection.prepareStatement(selectIdCast);
-             var prepareStatement2 = connection.prepareStatement(deleteProductClient);
-             var prepareStatement3 = connection.prepareStatement(deleteCart);
-             var prepareStatement4 = connection.prepareStatement(deleteUser)) {
+             var selectIdCartStatement = connection.prepareStatement(selectIdCart);
+             var deleteProductClientStatement = connection.prepareStatement(deleteProductClient);
+             var deleteCartStatement = connection.prepareStatement(deleteCart);
+             var deleteUserStatement = connection.prepareStatement(deleteUser)) {
+
+            selectIdCartStatement.setLong(1, id);
+            deleteUserStatement.setLong(1, id);
 
 
-            prepareStatement.setLong(1, id);
-            prepareStatement4.setLong(1, id);
-
-
-            var resultSet = prepareStatement.executeQuery();
+            var resultSet = selectIdCartStatement.executeQuery();
 
             if (resultSet.next()) {
                 int cartId = resultSet.getInt("cart_id");
-                prepareStatement2.setLong(1, cartId);
-                prepareStatement3.setLong(1, cartId);
-                prepareStatement2.executeUpdate();
-                int rows = prepareStatement4.executeUpdate();
-                prepareStatement3.executeUpdate();
+                deleteProductClientStatement.setLong(1, cartId);
+                deleteCartStatement.setLong(1, cartId);
+                deleteProductClientStatement.executeUpdate();
+                int rows = deleteUserStatement.executeUpdate();
+                deleteCartStatement.executeUpdate();
                 return rows > 0;
 
             } else {
