@@ -1,0 +1,79 @@
+
+###
+POST localhost:8080/customers
+Content-Type: application/json
+
+{
+  "name": "Oleg",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+###
+GET localhost:8080/customers/10
+
+###
+DELETE localhost:8080/customers/2
+
+###
+POST localhost:8080/products
+Content-Type: application/json
+
+{
+  "name": "Флаг",
+  "price": 100,
+  "amount": 1
+}
+
+###
+PUT localhost:8080/products
+Content-Type: application/json
+
+{
+  "id": 4,
+  "name": "Отрава",
+  "price": 730,
+  "amount": 1
+}
+
+###
+DELETE localhost:8080/products/1
+
+###
+GET localhost:8080/products/4
+
+###
+GET localhost:8080/products?name=Морковь
+
+###
+POST localhost:8080/carts/10
+Content-Type: application/json
+
+{
+  "id": 4,
+  "amount": 2
+}
+
+###
+PUT localhost:8080/carts/10/product/4
+Content-Type: application/json
+
+{
+  "amount": 3
+}
+
+###
+DELETE localhost:8080/carts/10/products/4
+
+###
+POST localhost:8080/payment
+Content-Type: application/json
+
+{
+  "numberCart": "1111",
+  "idUser": 10
+
+}
+
+
