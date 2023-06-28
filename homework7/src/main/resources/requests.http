@@ -47,7 +47,7 @@ GET localhost:8080/products/1
 GET localhost:8080/products?name=Морковь
 
 ###
-POST localhost:8080/carts/475965
+POST localhost:8080/carts/391441
 Content-Type: application/json
 
 {
@@ -71,8 +71,8 @@ POST localhost:8080/payment
 Content-Type: application/json
 
 {
-  "numberCart": "111154",
-  "idUser": 475965
+  "numberCart": "1111",
+  "idUser": 391441
 
 }
 

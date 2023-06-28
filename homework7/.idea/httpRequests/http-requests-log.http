@@ -1,0 +1,791 @@
+POST http://localhost:8080/payment
+Content-Type: application/json
+Content-Length: 47
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "numberCart": "1111",
+  "idUser": 391441
+
+}
+
+<> 2023-06-28T114850.200.json
+
+###
+
+POST http://localhost:8080/carts/391441
+Content-Type: application/json
+Content-Length: 28
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "id": 2,
+  "amount": 1
+}
+
+<> 2023-06-28T114843.200.json
+
+###
+
+POST http://localhost:8080/customers
+Content-Type: application/json
+Content-Length: 92
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Oleg",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+<> 2023-06-28T114833.200.json
+
+###
+
+POST http://localhost:8080/payment
+Content-Type: application/json
+Content-Length: 46
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "numberCart": "1111",
+  "idUser": 61899
+
+}
+
+<> 2023-06-28T114227.200.json
+
+###
+
+POST http://localhost:8080/carts/61899
+Content-Type: application/json
+Content-Length: 28
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "id": 2,
+  "amount": 1
+}
+
+<> 2023-06-28T114223.200.json
+
+###
+
+POST http://localhost:8080/customers
+Content-Type: application/json
+Content-Length: 92
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Oleg",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+<> 2023-06-28T114205.200.json
+
+###
+
+POST http://localhost:8080/payment
+Content-Type: application/json
+Content-Length: 47
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "numberCart": "1111",
+  "idUser": 401261
+
+}
+
+<> 2023-06-28T114052.200.json
+
+###
+
+POST http://localhost:8080/carts/401261
+Content-Type: application/json
+Content-Length: 28
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "id": 2,
+  "amount": 1
+}
+
+<> 2023-06-28T114046.200.json
+
+###
+
+POST http://localhost:8080/customers
+Content-Type: application/json
+Content-Length: 92
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Oleg",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+<> 2023-06-28T114034.200.json
+
+###
+
+POST http://localhost:8080/payment
+Content-Type: application/json
+Content-Length: 47
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "numberCart": "1111",
+  "idUser": 743025
+
+}
+
+<> 2023-06-28T113852.200.json
+
+###
+
+POST http://localhost:8080/carts/743025
+Content-Type: application/json
+Content-Length: 28
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "id": 2,
+  "amount": 1
+}
+
+<> 2023-06-28T113844.200.json
+
+###
+
+POST http://localhost:8080/carts/871380
+Content-Type: application/json
+Content-Length: 28
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "id": 2,
+  "amount": 1
+}
+
+###
+
+POST http://localhost:8080/customers
+Content-Type: application/json
+Content-Length: 92
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Oleg",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+<> 2023-06-28T113822.200.json
+
+###
+
+POST http://localhost:8080/payment
+Content-Type: application/json
+Content-Length: 48
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "numberCart": "11141",
+  "idUser": 871380
+
+}
+
+###
+
+POST http://localhost:8080/payment
+Content-Type: application/json
+Content-Length: 47
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "numberCart": "1111",
+  "idUser": 871380
+
+}
+
+<> 2023-06-28T113014.200.json
+
+###
+
+POST http://localhost:8080/carts/871380
+Content-Type: application/json
+Content-Length: 28
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "id": 2,
+  "amount": 1
+}
+
+<> 2023-06-28T112957.200.json
+
+###
+
+POST http://localhost:8080/customers
+Content-Type: application/json
+Content-Length: 92
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Oleg",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+<> 2023-06-28T112941.200.json
+
+###
+
+GET http://localhost:8080/products/945311
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-06-28T094124.200.json
+
+###
+
+GET http://localhost:8080/products/945311
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-06-28T094121.200.json
+
+###
+
+PUT http://localhost:8080/products
+Content-Type: application/json
+Content-Length: 74
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "id": 945311,
+  "name": "Яблоко",
+  "price": 70,
+  "amount": 1
+}
+
+<> 2023-06-28T094111.200.json
+
+###
+
+POST http://localhost:8080/products
+Content-Type: application/json
+Content-Length: 60
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Морковь",
+  "price": 70,
+  "amount": 1
+}
+
+<> 2023-06-28T094100.200.json
+
+###
+
+POST http://localhost:8080/payment
+Content-Type: application/json
+Content-Length: 49
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "numberCart": "111154",
+  "idUser": 475965
+
+}
+
+###
+
+POST http://localhost:8080/payment
+Content-Type: application/json
+Content-Length: 49
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "numberCart": "111154",
+  "idUser": 475965
+
+}
+
+###
+
+POST http://localhost:8080/carts/475965
+Content-Type: application/json
+Content-Length: 28
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "id": 2,
+  "amount": 1
+}
+
+<> 2023-06-28T094024.200.json
+
+###
+
+POST http://localhost:8080/customers
+Content-Type: application/json
+Content-Length: 92
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Oleg",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+<> 2023-06-28T093949.200.json
+
+###
+
+POST http://localhost:8080/payment
+Content-Type: application/json
+Content-Length: 49
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "numberCart": "111154",
+  "idUser": 312411
+
+}
+
+<> 2023-06-28T093637.500.json
+
+###
+
+POST http://localhost:8080/payment
+Content-Type: application/json
+Content-Length: 47
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "numberCart": "1111",
+  "idUser": 312411
+
+}
+
+###
+
+POST http://localhost:8080/payment
+Content-Type: application/json
+Content-Length: 45
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "numberCart": 1111,
+  "idUser": 127551
+
+}
+
+###
+
+POST http://localhost:8080/carts/312411
+Content-Type: application/json
+Content-Length: 28
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "id": 2,
+  "amount": 1
+}
+
+<> 2023-06-28T093551.200.json
+
+###
+
+POST http://localhost:8080/customers
+Content-Type: application/json
+Content-Length: 92
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Oleg",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+<> 2023-06-28T093526.200.json
+
+###
+
+GET http://localhost:8080/products/1
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-06-28T092923.404.json
+
+###
+
+POST http://localhost:8080/customers
+Content-Type: application/json
+Content-Length: 92
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Oleg",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+<> 2023-06-28T092903.404.json
+
+###
+
+POST http://localhost:8080/products
+Content-Type: application/json
+Content-Length: 60
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Морковь",
+  "price": 70,
+  "amount": 1
+}
+
+<> 2023-06-28T091824.404.json
+
+###
+
+POST http://localhost:8080/customers
+Content-Type: application/json
+Content-Length: 92
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Oleg",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+<> 2023-06-28T091810.404.json
+
+###
+
+POST http://localhost:8080/customers
+Content-Type: application/json
+Content-Length: 92
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Oleg",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+<> 2023-06-28T091649.404.json
+
+###
+
+GET http://localhost:8080/customers/845808
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+<> 2023-06-28T091637.404.json
+
+###
+
+POST http://localhost:8080/customers
+Content-Type: application/json
+Content-Length: 92
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Oleg",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+<> 2023-06-28T091628.404.json
+
+###
+
+POST http://localhost:8080/customers
+Content-Type: application/json
+Content-Length: 92
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Oleg",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+<> 2023-06-28T091522.404.json
+
+###
+
+POST http://localhost:8080/customers
+Content-Type: application/json
+Content-Length: 92
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Oleg",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+<> 2023-06-28T091411.404.json
+
+###
+
+POST http://localhost:8080/customers
+Content-Type: application/json
+Content-Length: 92
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Oleg",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+<> 2023-06-28T091359.404.json
+
+###
+
+POST http://localhost:8080/payment
+Content-Type: application/json
+Content-Length: 37
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "sum": 666,
+  "idUser": 127551
+
+}
+
+###
+
+POST http://localhost:8080/carts/454547
+Content-Type: application/json
+Content-Length: 28
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "id": 2,
+  "amount": 1
+}
+
+<> 2023-06-28T003624.200.json
+
+###
+
+POST http://localhost:8080/customers
+Content-Type: application/json
+Content-Length: 92
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "name": "Oleg",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+<> 2023-06-28T003607.200.json
+
+###
+
+POST http://localhost:8080/payment
+Content-Type: application/json
+Content-Length: 37
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "sum": 666,
+  "idUser": 845808
+
+}
+
+###
+
+POST http://localhost:8080/payment
+Content-Type: application/json
+Content-Length: 31
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "sum": 10,
+  "idUser": 2
+
+}
+
+###
+
+POST http://localhost:8080/payment
+Content-Type: application/json
+Content-Length: 31
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "sum": 10,
+  "idUser": 2
+
+}
+
+###
+
+POST http://localhost:8080/carts/454547
+Content-Type: application/json
+Content-Length: 28
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "id": 2,
+  "amount": 1
+}
+
+<> 2023-06-28T003458.200.json
+
+###
+
+DELETE http://localhost:8080/carts/454547/products/2
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+###
+
+PUT http://localhost:8080/carts/454547/product/2
+Content-Type: application/json
+Content-Length: 17
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "amount": 3
+}
+
+<> 2023-06-28T003349.200.json
+
+###
+
+POST http://localhost:8080/carts/454547
+Content-Type: application/json
+Content-Length: 28
+Connection: Keep-Alive
+User-Agent: Apache-HttpClient/4.5.14 (Java/17.0.7)
+Accept-Encoding: br,deflate,gzip,x-gzip
+
+{
+  "id": 2,
+  "amount": 1
+}
+
+<> 2023-06-28T003326.200.json
+
+###
+

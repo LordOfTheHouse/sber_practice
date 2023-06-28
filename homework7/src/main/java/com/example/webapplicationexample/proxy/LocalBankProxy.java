@@ -9,6 +9,9 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Банк пользователя
+ */
 @Component
 public class LocalBankProxy implements BankProxy {
     List<BankAccount> accountList = List.of(new BankAccount("1111", BigDecimal.valueOf(10000)),

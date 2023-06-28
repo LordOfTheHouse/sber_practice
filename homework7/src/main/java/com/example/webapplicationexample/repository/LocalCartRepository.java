@@ -51,7 +51,7 @@ public class LocalCartRepository implements CartRepository{
 
     @Override
     public Cart generate(long id){
-        Cart cart = new Cart(id, new ArrayList<>(), "");
+        Cart cart = new Cart(id, new ArrayList<>(), "lol");
         carts.add(cart);
         return cart;
     }

@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.math.BigDecimal;
+
 /**
  * Получения запросов связанных с оплатой
  */
@@ -28,13 +30,8 @@ public class PaymentController {
      * @return статус оплаты
      */
     @PostMapping
-    public ResponseEntity<?> pay(@RequestBody Transfer transfer) {
+    public BigDecimal pay(@RequestBody Transfer transfer) {
         log.info("Совершение платежа {}", transfer);
-        boolean isPay = localPaymentService.pay(transfer);
-        if (isPay) {
-            return ResponseEntity.accepted().build();
-        } else {
-            return ResponseEntity.badRequest().build();
-        }
+        return localPaymentService.pay(transfer);
     }
 }

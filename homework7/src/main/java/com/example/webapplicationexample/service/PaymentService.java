@@ -2,6 +2,8 @@ package com.example.webapplicationexample.service;
 
 import com.example.webapplicationexample.model.Transfer;
 
+import java.math.BigDecimal;
+
 /**
  * Сервис по оплате товаров
  */
@@ -11,5 +13,5 @@ public interface PaymentService {
      * @param transfer - информация о платеже
      * @return успешность операции
      */
-    boolean pay(Transfer transfer);
+    BigDecimal pay(Transfer transfer);
 }
