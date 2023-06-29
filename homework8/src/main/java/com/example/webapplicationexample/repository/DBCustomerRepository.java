@@ -92,10 +92,10 @@ public class DBCustomerRepository implements CustomerRepository {
                 selectCastStatement.setLong(1, idCart);
                 var resultProducts = selectCastStatement.executeQuery();
                 while (resultProducts.next()) {
-                    int idProduct = resultProducts.getInt("p.id");
-                    String nameProduct = resultProducts.getString("p.name");
+                    int idProduct = resultProducts.getInt("id");
+                    String nameProduct = resultProducts.getString("name");
                     BigDecimal priceProduct = BigDecimal.valueOf(resultProducts.getDouble("price"));
-                    int amount = resultProducts.getInt("pc.count");
+                    int amount = resultProducts.getInt("count");
                     products.add(new Product(idProduct, nameProduct, priceProduct, amount));
                 }
                 Cart cart = new Cart((long) idCart, products, "");
@@ -154,7 +154,7 @@ public class DBCustomerRepository implements CustomerRepository {
                 return rows > 0;
 
             } else {
-                throw new RuntimeException();
+                return false;
             }
 
         } catch (SQLException e) {

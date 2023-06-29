@@ -182,12 +182,28 @@ public class DBCartRepository implements CartRepository{
                 from katerniuksm.client
                 where id = ?;
                 """;
+        String selectPromocode = """ 
+                select percent
+                from katerniuksm.promocodes
+                where promocode = ?;
+                """;
+
+        String selectPromocodeClient = """ 
+                select c.promocode
+                from katerniuksm.client
+                join katerniuksm.cart c on c.id = client.cart_id
+                where client.id = ?;
+                """;
 
         try (var connection = DriverManager.getConnection(JDBC);
              var selectSumStatement = connection.prepareStatement(selectSum);
-             var countUserStatement = connection.prepareStatement(countUser)){
+             var countUserStatement = connection.prepareStatement(countUser);
+             var selectPromocodeStatement = connection.prepareStatement(selectPromocode);
+             var selectPromocodeClientStatement = connection.prepareStatement(selectPromocodeClient)){
+
             countUserStatement.setLong(1, userId);
             selectSumStatement.setLong(1, userId);
+
             var act =  countUserStatement.executeQuery();
             if(act.next()){
                 int isUser = act.getInt("client");
@@ -197,8 +213,23 @@ public class DBCartRepository implements CartRepository{
             }
             var resultProducts = selectSumStatement.executeQuery();
             if(resultProducts.next()) {
+                selectPromocodeClientStatement.setLong(1, userId);
+                var promoClientResult = selectPromocodeClientStatement.executeQuery();
+                double discount = 0.0;
+                if(promoClientResult.next()){
+                    String promo = promoClientResult.getString("promocode");
+
+                    selectPromocodeStatement.setString(1, promo);
+                    var resultPromocode = selectPromocodeStatement.executeQuery();
+                    if(resultPromocode.next()){
+                        log.info("Промокод активирован");
+                        discount = resultPromocode.getDouble("percent") /100.0;
+                    }
+                }
                 double sum = resultProducts.getDouble("sum");
-                if (sum != 0) {
+
+                sum = sum*(1-discount);
+                if (sum > 0) {
                     return BigDecimal.valueOf(sum);
                 }
             }

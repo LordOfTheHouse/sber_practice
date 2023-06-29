@@ -11,18 +11,18 @@ Content-Type: application/json
 }
 
 ###
-GET localhost:8080/customers/12
+GET localhost:8080/customers/13
 
 ###
-DELETE localhost:8080/customers/2
+DELETE localhost:8080/customers/11
 
 ###
 POST localhost:8080/products
 Content-Type: application/json
 
 {
-  "name": "Флаг",
-  "price": 100,
+  "name": "Царь-Бомба",
+  "price": 10000000,
   "amount": 1
 }
 
@@ -32,31 +32,31 @@ Content-Type: application/json
 
 {
   "id": 4,
-  "name": "Отрава",
+  "name": "Сода",
   "price": 730,
   "amount": 1
 }
 
 ###
-DELETE localhost:8080/products/1
+DELETE localhost:8080/products/2
 
 ###
-GET localhost:8080/products/4
+GET localhost:8080/products/5
 
 ###
-GET localhost:8080/products?name=Морковь
+GET localhost:8080/products?name=Царь
 
 ###
-POST localhost:8080/carts/12
+POST localhost:8080/carts/13
 Content-Type: application/json
 
 {
-  "id": 4,
+  "id": 5,
   "amount": 2
 }
 
 ###
-PUT localhost:8080/carts/12/product/4
+PUT localhost:8080/carts/13/product/5
 Content-Type: application/json
 
 {

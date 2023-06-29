@@ -39,3 +39,14 @@ create table katerniuksm.product_client
             references katerniuksm.cart,
     count      integer not null
 );
+
+create table katerniuksm.promocodes
+(
+    promocode  varchar(255)
+        primary key,
+    percent integer not null
+
+);
+
+insert into katerniuksm.promocodes values('GOD', 10);
+update katerniuksm.cart set promocode='GOD' where id=9;

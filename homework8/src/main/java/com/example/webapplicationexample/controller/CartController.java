@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.Optional;
 
 /**
@@ -41,7 +42,7 @@ public class CartController {
         p.get().setAmount(product.getAmount());
         Optional<Cart> cart = cartRepository.addProductInCartById(id, p.get());
         if (cart.isPresent()) {
-            return ResponseEntity.ok().body(cart.get());
+            return ResponseEntity.created(URI.create("cart/"+id)).body(cart.get());
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -60,7 +61,7 @@ public class CartController {
         log.info("Изменение количества товара в корзине");
         Optional<Cart> cart = cartRepository.updateAmountProduct(idCart,idProduct, product.getAmount());
         if (cart.isPresent()) {
-            return ResponseEntity.ok().body(cart.get());
+            return ResponseEntity.accepted().body(cart.get());
         } else {
             return ResponseEntity.notFound().build();
         }
