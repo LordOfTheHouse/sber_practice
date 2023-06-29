@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Осуществляет операции с клиентом в базе данных
+ */
 @Slf4j
 @Repository
 public class DBCustomerRepository implements CustomerRepository {
@@ -81,7 +84,6 @@ public class DBCustomerRepository implements CustomerRepository {
             var resultSet = selectUserStatement.executeQuery();
 
             if (resultSet.next()) {
-                log.info("rabotaet 1");
                 var idUser = resultSet.getInt("id");
                 var name = resultSet.getString("name");
                 var email = resultSet.getString("email");
@@ -99,13 +101,12 @@ public class DBCustomerRepository implements CustomerRepository {
                 Cart cart = new Cart((long) idCart, products, "");
                 return Optional.of(new Customer(idUser, name, "", "", email, cart));
             }
-        return Optional.empty();
-    } catch(SQLException e)
-    {
-        throw new RuntimeException(e);
-    }
+            return Optional.empty();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
 
-}
+    }
 
     @Override
     public boolean deleteById(long id) {

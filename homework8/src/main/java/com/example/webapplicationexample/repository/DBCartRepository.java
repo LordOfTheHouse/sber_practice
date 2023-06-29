@@ -16,6 +16,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Осуществляет операции с корзиной в базе данных
+ */
 @Slf4j
 @Repository
 public class DBCartRepository implements CartRepository{
@@ -36,9 +39,9 @@ public class DBCartRepository implements CartRepository{
                 where id_cart = ? and id_product = ?
                 """;
         var insertCast = """
-               insert into katerniuksm.product_client(id_product, id_cart, count)
-               values(?,?,?);
-                """;
+                insert into katerniuksm.product_client(id_product, id_cart, count)
+                values(?,?,?);
+                 """;
         var updateCast = """
                update katerniuksm.product_client
                set count = count + ?
@@ -49,7 +52,6 @@ public class DBCartRepository implements CartRepository{
              var selectProductInCartStatement = connection.prepareStatement(selectCast);
              var selectProductStatement = connection.prepareStatement(selectProduct);
              var updateProductStatement = connection.prepareStatement(updateCast)){
-
             insertProductStatement.setLong(1, product.getId());
             insertProductStatement.setLong(2, cartId);
             insertProductStatement.setInt(3, product.getAmount());

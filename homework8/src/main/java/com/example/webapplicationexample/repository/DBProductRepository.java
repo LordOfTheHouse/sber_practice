@@ -12,9 +12,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Осуществляет операции с пробуктом в базе данных
+ */
 @Repository
 public class DBProductRepository implements ProductRepository {
     public static final String JDBC = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres";
+
     @Override
     public long save(Product product) {
         var insertSql = "INSERT INTO katerniuksm.product (name, price) VALUES (?,?);";
@@ -42,9 +46,9 @@ public class DBProductRepository implements ProductRepository {
     @Override
     public Optional<Product> findById(long productId) {
         var selectSql = """
-        SELECT * FROM katerniuksm.product p 
-        where id = ?
-        """;
+                SELECT * FROM katerniuksm.product p 
+                where id = ?
+                """;
 
         try (var connection = DriverManager.getConnection(JDBC);
              var prepareStatement = connection.prepareStatement(selectSql)) {
