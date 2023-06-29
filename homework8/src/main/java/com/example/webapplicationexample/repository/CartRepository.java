@@ -48,6 +48,11 @@ public interface CartRepository {
      */
     BigDecimal getSumPriceCart(long userId);
 
+    /**
+     * Возвращает корзину с продуктами
+     * @param idCart - индификатор корзины
+     * @return корзина
+     */
     Optional<Cart> getCartById(long idCart);
 
 }

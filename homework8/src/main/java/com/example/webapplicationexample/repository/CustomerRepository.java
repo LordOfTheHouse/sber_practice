@@ -21,5 +21,10 @@ public interface CustomerRepository {
      * @return пользователь
      */
     Optional<Customer> getById(long id);
+
+    /**
+     * Удаляет пользователя по id
+     * @param id - индификатор пользователя
+     */
     boolean deleteById(long id);
 }
