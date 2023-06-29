@@ -106,7 +106,10 @@ public class DBCartRepository implements CartRepository{
             selectCastStatement.setLong(1, amount);
             selectCastStatement.setLong(2, idCart);
             selectCastStatement.setLong(3, idProduct);
-            selectCastStatement.executeUpdate();
+            var rows = selectCastStatement.executeUpdate();
+            if(rows < 1){
+                return Optional.empty();
+            }
             updateCastStatement.setLong(1, idCart);
             var resultProducts = updateCastStatement.executeQuery();
             while (resultProducts.next()) {
