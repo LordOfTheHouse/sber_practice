@@ -33,13 +33,16 @@ public class CartController {
      * @return корзину после изменений
      */
     @PostMapping("/{id}")
-    public ResponseEntity<Cart> addProduct(@PathVariable long id, @RequestBody Product product) {
+    public ResponseEntity<?> addProduct(@PathVariable long id, @RequestBody Product product) {
         log.info("Добавление продукта {} в корзину", product);
         Optional<Product> p = productRepository.findById(product.getId());
         Optional<Cart> c = cartRepository.getCartById(id);
 
         if (p.isEmpty() || c.isEmpty()){
             return ResponseEntity.notFound().build();
+        }
+        if(product.getAmount() < 0){
+            return ResponseEntity.badRequest().body("Количество товара не может быть отрицательным числом");
         }
         log.info("{} {}", c.get(), p.get());
         p.get().setAmount(product.getAmount());
@@ -58,12 +61,14 @@ public class CartController {
      * @return корзину после изменений
      */
     @PutMapping("/{idCart}/product/{idProduct}")
-    public ResponseEntity<Cart> updateAmount(@PathVariable long idCart, @PathVariable long idProduct,
+    public ResponseEntity<?> updateAmount(@PathVariable long idCart, @PathVariable long idProduct,
                                              @RequestBody Product product) {
         log.info("Изменение количества товара в корзине");
-
+        if(product.getAmount() < 0){
+            return ResponseEntity.badRequest().body("Количество товара не может быть отрицательным числом");
+        }
         if (cartRepository.updateAmountProduct(idCart,idProduct, product.getAmount())) {
-            return ResponseEntity.accepted().body(cartRepository.getCartById(idCart).get());
+            return ResponseEntity.ok().body(cartRepository.getCartById(idCart).get());
         } else {
             return ResponseEntity.notFound().build();
         }

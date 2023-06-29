@@ -32,6 +32,9 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<?> addProduct(@RequestBody Product product) {
         log.info("Добавление продукта {}", product);
+        if(product.getAmount() < 0){
+            return ResponseEntity.badRequest().body("Количество товара не может быть отрицательным числом");
+        }
         return ResponseEntity.created(URI.create("/products/" + productRepository.save(product))).build();
     }
 
@@ -69,10 +72,13 @@ public class ProductController {
      * @return новый продукт
      */
     @PutMapping
-    public Product updateProduct(@RequestBody Product product) {
+    public ResponseEntity<?> updateProduct(@RequestBody Product product) {
         log.info("Обновляет информацию о продукте: {}", product);
+        if(product.getAmount() < 0){
+            return ResponseEntity.badRequest().body("Количество товара не может быть отрицательным числом");
+        }
         productRepository.update(product);
-        return product;
+        return ResponseEntity.ok().body(product);
     }
 
     /**
