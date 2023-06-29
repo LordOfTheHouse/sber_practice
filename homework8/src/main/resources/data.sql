@@ -23,7 +23,8 @@ create table katerniuksm.client
     password varchar(255) not null,
     cart_id  integer      not null
         constraint client_cart_id_fk
-            references katerniuksm.cart
+            references katerniuksm.cart,
+    email varchar(255) not null
 );
 
 create table katerniuksm.product_client
