@@ -1,19 +1,20 @@
 package com.example.webapplicationexample.repository;
 
 import com.example.webapplicationexample.exception.AccountNotDefined;
+import com.example.webapplicationexample.exception.ProductNotInStock;
 import com.example.webapplicationexample.model.Cart;
-import com.example.webapplicationexample.model.Customer;
 import com.example.webapplicationexample.model.Product;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
 import java.util.Optional;
 
 /**
@@ -24,20 +25,63 @@ import java.util.Optional;
 public class DBCartRepository implements CartRepository{
     public static final String JDBC = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres";
 
+    private final JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public DBCartRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+
     @Override
-    public Optional<Cart> addProductInCartById(long cartId, Product product) {
-        List<Product> products = new ArrayList<>();
-        var selectCast = """
-                SELECT *   
-                From katerniuksm.product_client pc 
-                join katerniuksm.product p on pc.id_product = p.id
+    public Optional<Cart> getCartById(long idCart){
+        var selectProducts = """
+                SELECT *  
+                from katerniuksm.product_client
+                join katerniuksm.product p on id_product = p.id
                 where id_cart = ?
                 """;
-        var selectProduct = """
+
+        var selectCast = """
                 SELECT *  
-                From katerniuksm.product_client
-                where id_cart = ? and id_product = ?
+                from katerniuksm.cart
+                where id= ?
                 """;
+
+        PreparedStatementCreator preparedStatementCreatorProduct = connection -> {
+            var prepareStatement = connection.prepareStatement(selectProducts);
+            prepareStatement.setInt(1, (int) idCart);
+            return prepareStatement;
+        };
+
+        PreparedStatementCreator preparedStatementCreatorCart = connection -> {
+            var prepareStatement = connection.prepareStatement(selectCast);
+            prepareStatement.setInt(1, (int) idCart);
+            return prepareStatement;
+        };
+
+        RowMapper<Product> productsSelect = (resultSet, rowNum) -> {
+            int idProduct = resultSet.getInt("id_product");
+            String nameProduct = resultSet.getString("name");
+            BigDecimal priceProduct = BigDecimal.valueOf(resultSet.getDouble("price"));
+            int amount = resultSet.getInt("count");
+            return new Product(idProduct, nameProduct, priceProduct, amount);
+        };
+
+        RowMapper<Cart> cartSelect = (resultSet, rowNum) -> {
+            String promocode = resultSet.getString("promocode");
+            return new Cart(idCart
+                    , jdbcTemplate.query(preparedStatementCreatorProduct, productsSelect)
+                    , promocode);
+        };
+        return jdbcTemplate.query(preparedStatementCreatorCart, cartSelect).stream().findAny();
+
+    }
+
+    @Override
+    public boolean addProductInCartById(long cartId, Product product) {
+
+
         var insertCast = """
                 insert into katerniuksm.product_client(id_product, id_cart, count)
                 values(?,?,?);
@@ -47,81 +91,23 @@ public class DBCartRepository implements CartRepository{
                set count = count + ?
                where id_cart =? and id_product=?; 
                 """;
-        try (var connection = DriverManager.getConnection(JDBC);
-             var insertProductStatement = connection.prepareStatement(insertCast, Statement.RETURN_GENERATED_KEYS);
-             var selectProductInCartStatement = connection.prepareStatement(selectCast);
-             var selectProductStatement = connection.prepareStatement(selectProduct);
-             var updateProductStatement = connection.prepareStatement(updateCast)){
-            insertProductStatement.setLong(1, product.getId());
-            insertProductStatement.setLong(2, cartId);
-            insertProductStatement.setInt(3, product.getAmount());
-            
-            selectProductStatement.setLong(1, cartId);
-            selectProductStatement.setLong(2, product.getId());
-            
-            if(selectProductStatement.executeQuery().next()){
-                updateProductStatement.setLong(1, product.getAmount());
-                updateProductStatement.setLong(2, cartId);
-                updateProductStatement.setLong(3, product.getId());
-                updateProductStatement.executeUpdate();
-            } else {
-                insertProductStatement.executeUpdate();
-            }
-
-            selectProductInCartStatement.setLong(1, cartId);
-            var resultProducts = selectProductInCartStatement.executeQuery();
-
-            while (resultProducts.next()) {
-
-                int idProduct = resultProducts.getInt("id_product");
-                String nameProduct = resultProducts.getString("name");
-                BigDecimal priceProduct = BigDecimal.valueOf(resultProducts.getDouble("price"));
-                int amount = resultProducts.getInt("count");
-                products.add(new Product(idProduct, nameProduct, priceProduct, amount));
-            }
-            return Optional.of(new Cart((long) cartId, products, ""));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        int rows = jdbcTemplate.update(updateCast, product.getAmount(), cartId, product.getId());
+        if(rows<1){
+            return jdbcTemplate.update(insertCast,  product.getId(), cartId, product.getAmount()) > 0;
         }
+        return true;
     }
 
     @Override
-    public Optional<Cart> updateAmountProduct(long idCart, long idProduct, int amount) {
-        List<Product> products = new ArrayList<>();
+    public boolean updateAmountProduct(long idCart, long idProduct, int amount) {
 
-        var selectCast = """
-                SELECT *   
-                From katerniuksm.product_client pc 
-                join katerniuksm.product p on pc.id_product = p.id
-                where pc.id_cart = ?
-                """;
         var updateCast = """
                update katerniuksm.product_client
                set count = ?
                where id_cart=? and id_product=?;
                 """;
-        try (var connection = DriverManager.getConnection(JDBC);
-             var selectCastStatement = connection.prepareStatement(updateCast);
-             var updateCastStatement = connection.prepareStatement(selectCast)){
-            selectCastStatement.setLong(1, amount);
-            selectCastStatement.setLong(2, idCart);
-            selectCastStatement.setLong(3, idProduct);
-            var rows = selectCastStatement.executeUpdate();
-            if(rows < 1){
-                return Optional.empty();
-            }
-            updateCastStatement.setLong(1, idCart);
-            var resultProducts = updateCastStatement.executeQuery();
-            while (resultProducts.next()) {
-                String nameProduct = resultProducts.getString("name");
-                BigDecimal priceProduct = BigDecimal.valueOf(resultProducts.getDouble("price"));
-                int count = resultProducts.getInt("count");
-                products.add(new Product(idProduct, nameProduct, priceProduct, count));
-            }
-            return Optional.of(new Cart(idCart, products, ""));
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+
+        return jdbcTemplate.update(updateCast, amount, idCart, idProduct) > 0;
     }
 
     @Override
@@ -131,40 +117,26 @@ public class DBCartRepository implements CartRepository{
                 delete from katerniuksm.product_client
                 where id_cart = ? and id_product = ?;
                 """;
-        try (var connection = DriverManager.getConnection(JDBC);
-             var prepareStatement = connection.prepareStatement(deleteProduct)){
-            prepareStatement.setLong(1, idCart);
-            prepareStatement.setLong(2, idProduct);
-
-            var rows = prepareStatement.executeUpdate();
-            return rows > 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        int rows = jdbcTemplate.update(deleteProduct, idCart, idProduct);
+        return rows > 1;
     }
 
     @Override
-    public Cart generate(long id) {
+    public long generate() {
         var insertSql = """
                     INSERT INTO katerniuksm.cart (promocode) 
                     VALUES (?);
                     """;
-        try (var connection = DriverManager.getConnection(JDBC);
-             var prepareStatement = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
-            prepareStatement.setString(1, "");
-            prepareStatement.executeUpdate();
 
-            ResultSet rs = prepareStatement.getGeneratedKeys();
+        KeyHolder keyHolder = new GeneratedKeyHolder();
 
-            if (rs.next()) {
-                return new Cart(rs.getLong(1), null, null);
-            } else {
-                throw new RuntimeException("Ошибка при получении идентификатора");
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        PreparedStatementCreator preparedStatementCreator = connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, "");
+            return preparedStatement;
+        };
+        jdbcTemplate.update(preparedStatementCreator, keyHolder);
+        return (long) (int) keyHolder.getKeys().get("id");
     }
 
     @Override
@@ -177,13 +149,26 @@ public class DBCartRepository implements CartRepository{
                 where c.id = ?;
                 """;
 
+        String updateAmount = """
+                update katerniuksm.product p 
+                set amount = amount - (select count from katerniuksm.product_client where id_product = p.id and id_cart = ?)
+                where id in (select id_product from katerniuksm.product_client where id_cart = ?)
+                """;
+
+        String selectAmountProduct = """
+                select count(*)
+                from katerniuksm.product p
+                join katerniuksm.product_client pc on p.id = pc.id_product and p.amount < pc.count
+                where id_cart=?;
+                """;
+
         String countUser = """ 
                 select count(*) client
                 from katerniuksm.client
                 where id = ?;
                 """;
         String selectPromocode = """ 
-                select percent
+                select sum(percent)
                 from katerniuksm.promocodes
                 where promocode = ?;
                 """;
@@ -194,48 +179,29 @@ public class DBCartRepository implements CartRepository{
                 join katerniuksm.cart c on c.id = client.cart_id
                 where client.id = ?;
                 """;
-
-        try (var connection = DriverManager.getConnection(JDBC);
-             var selectSumStatement = connection.prepareStatement(selectSum);
-             var countUserStatement = connection.prepareStatement(countUser);
-             var selectPromocodeStatement = connection.prepareStatement(selectPromocode);
-             var selectPromocodeClientStatement = connection.prepareStatement(selectPromocodeClient)){
-
-            countUserStatement.setLong(1, userId);
-            selectSumStatement.setLong(1, userId);
-
-            var act =  countUserStatement.executeQuery();
-            if(act.next()){
-                int isUser = act.getInt("client");
-                if(isUser == 0){
-                    throw new AccountNotDefined("Пользователь не определен");
-                }
-            }
-            var resultProducts = selectSumStatement.executeQuery();
-            if(resultProducts.next()) {
-                selectPromocodeClientStatement.setLong(1, userId);
-                var promoClientResult = selectPromocodeClientStatement.executeQuery();
-                double discount = 0.0;
-                if(promoClientResult.next()){
-                    String promo = promoClientResult.getString("promocode");
-
-                    selectPromocodeStatement.setString(1, promo);
-                    var resultPromocode = selectPromocodeStatement.executeQuery();
-                    if(resultPromocode.next()){
-                        log.info("Промокод активирован");
-                        discount = resultPromocode.getDouble("percent") /100.0;
-                    }
-                }
-                double sum = resultProducts.getDouble("sum");
-
-                sum = sum*(1-discount);
-                if (sum > 0) {
-                    return BigDecimal.valueOf(sum);
-                }
-            }
-            throw new AccountNotDefined("Нет товара для оплаты");
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        Integer isAccount = jdbcTemplate.queryForObject(countUser, Integer.class, userId);
+        if (isAccount < 1) {
+            throw new AccountNotDefined("Аккаунта с данным id не существует");
         }
+        Integer count = jdbcTemplate.queryForObject(selectAmountProduct, Integer.class, userId);
+        if (count > 0) {
+            throw new ProductNotInStock("Товара на складе не достаточно");
+        }
+        String promocode = jdbcTemplate.queryForObject(selectPromocodeClient, String.class, userId);
+
+        Double coefficient = jdbcTemplate.queryForObject(selectPromocode, Double.class, promocode);
+        if (coefficient == null) {
+            coefficient = 0.0;
+        } else {
+            coefficient /= 100.0;
+        }
+
+        jdbcTemplate.update(updateAmount, userId, userId);
+        Double sum = jdbcTemplate.queryForObject(selectSum, Double.class, userId);
+        if (sum == null) {
+            throw new AccountNotDefined("Нет товара для оплаты");
+        }
+
+        return BigDecimal.valueOf(sum * (1 - coefficient));
     }
 }

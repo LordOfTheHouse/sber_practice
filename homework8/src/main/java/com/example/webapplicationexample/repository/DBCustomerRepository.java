@@ -1,16 +1,20 @@
 package com.example.webapplicationexample.repository;
 
 import com.example.webapplicationexample.model.Cart;
+import com.example.webapplicationexample.model.CroppedCustomer;
 import com.example.webapplicationexample.model.Customer;
 import com.example.webapplicationexample.model.Product;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,9 +28,11 @@ public class DBCustomerRepository implements CustomerRepository {
     public static final String JDBC = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres";
 
     private final CartRepository cartRepository;
+    private final JdbcTemplate jdbcTemplate;
 
-    public DBCustomerRepository(CartRepository cartRepository) {
+    public DBCustomerRepository(CartRepository cartRepository, JdbcTemplate jdbcTemplate) {
         this.cartRepository = cartRepository;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     @Override
@@ -35,87 +41,53 @@ public class DBCustomerRepository implements CustomerRepository {
                 INSERT INTO katerniuksm.client (name, username, password, cart_id, email) 
                 VALUES (?,?,?,?,?);
                 """;
+        KeyHolder keyHolder = new GeneratedKeyHolder();
 
-        try (var connection = DriverManager.getConnection(JDBC);
-             var prepareStatement = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
-
+        PreparedStatementCreator preparedStatementCreator = connection -> {
+            PreparedStatement prepareStatement = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
             prepareStatement.setString(1, customer.getName());
             prepareStatement.setString(2, customer.getLogin());
             prepareStatement.setString(3, customer.getPassword());
-            prepareStatement.setLong(4, cartRepository.generate(1L).getId());
+            prepareStatement.setLong(4, cartRepository.generate());
             prepareStatement.setString(5, customer.getEmail());
-            prepareStatement.executeUpdate();
-
-            ResultSet rs = prepareStatement.getGeneratedKeys();
-
-            if (rs.next()) {
-                return rs.getInt(1);
-            } else {
-                throw new RuntimeException("Ошибка при получении идентификатора");
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+            return prepareStatement;
+        };
+        jdbcTemplate.update(preparedStatementCreator, keyHolder);
+        return (long)(int) keyHolder.getKeys().get("id");
     }
 
-
     @Override
-    public Optional<Customer> getById(long id) {
+    public Optional<Customer> getById(long userId) {
         var selectUser = """
                 SELECT *   
-                FROM katerniuksm.client 
-                where id = ?
-                """;
-        var selectCast = """
-                SELECT *   
-                From katerniuksm.product_client pc 
-                join katerniuksm.product p on pc.id_product = p.id
-                where pc.id_cart = ?
+                FROM katerniuksm.client
+                join katerniuksm.cart c on c.id = client.cart_id 
+                where client.id = ?
                 """;
 
-        List<Product> products = new ArrayList<>();
-        try (var connection = DriverManager.getConnection(JDBC);
-             var selectUserStatement = connection.prepareStatement(selectUser);
-             var selectCastStatement = connection.prepareStatement(selectCast)) {
+        PreparedStatementCreator preparedStatementCreatorUser = connection -> {
+            var prepareStatement = connection.prepareStatement(selectUser);
+            prepareStatement.setInt(1, (int) userId);
+            return prepareStatement;
+        };
 
-            selectUserStatement.setLong(1, id);
+        RowMapper<Customer> userRowMapper = (resultSet, rowNum) -> {
+            int id = resultSet.getInt("id");
+            String name = resultSet.getString("name");
+            String email = resultSet.getString("email");
+            int idCart = resultSet.getInt("cart_id");
+            return new Customer(id, name, null, null, email, cartRepository.getCartById(idCart).get());
+        };
 
-            var resultSet = selectUserStatement.executeQuery();
-
-            if (resultSet.next()) {
-                var idUser = resultSet.getInt("id");
-                var name = resultSet.getString("name");
-                var email = resultSet.getString("email");
-                var idCart = resultSet.getInt("cart_id");
-
-                selectCastStatement.setLong(1, idCart);
-                var resultProducts = selectCastStatement.executeQuery();
-                while (resultProducts.next()) {
-                    int idProduct = resultProducts.getInt("id");
-                    String nameProduct = resultProducts.getString("name");
-                    BigDecimal priceProduct = BigDecimal.valueOf(resultProducts.getDouble("price"));
-                    int amount = resultProducts.getInt("count");
-                    products.add(new Product(idProduct, nameProduct, priceProduct, amount));
-                }
-                Cart cart = new Cart((long) idCart, products, "");
-                return Optional.of(new Customer(idUser, name, "", "", email, cart));
-            }
-            return Optional.empty();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        return jdbcTemplate.query(preparedStatementCreatorUser, userRowMapper).stream().findAny();
 
     }
 
+
     @Override
+    @Transactional
     public boolean deleteById(long id) {
 
-        var selectIdCart = """
-                SELECT cart_id  
-                FROM katerniuksm.client 
-                where id = ?
-                """;
 
         var deleteProductClient = """
                 delete from katerniuksm.product_client
@@ -132,33 +104,10 @@ public class DBCustomerRepository implements CustomerRepository {
                 where id = ? 
                 """;
 
-        try (var connection = DriverManager.getConnection(JDBC);
-             var selectIdCartStatement = connection.prepareStatement(selectIdCart);
-             var deleteProductClientStatement = connection.prepareStatement(deleteProductClient);
-             var deleteCartStatement = connection.prepareStatement(deleteCart);
-             var deleteUserStatement = connection.prepareStatement(deleteUser)) {
+        jdbcTemplate.update(deleteProductClient, id);
+        int rows = jdbcTemplate.update(deleteUser, id);
+        jdbcTemplate.update(deleteCart, id);
+        return rows > 0;
 
-            selectIdCartStatement.setLong(1, id);
-            deleteUserStatement.setLong(1, id);
-
-
-            var resultSet = selectIdCartStatement.executeQuery();
-
-            if (resultSet.next()) {
-                int cartId = resultSet.getInt("cart_id");
-                deleteProductClientStatement.setLong(1, cartId);
-                deleteCartStatement.setLong(1, cartId);
-                deleteProductClientStatement.executeUpdate();
-                int rows = deleteUserStatement.executeUpdate();
-                deleteCartStatement.executeUpdate();
-                return rows > 0;
-
-            } else {
-                return false;
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

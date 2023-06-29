@@ -4,26 +4,26 @@ POST localhost:8080/customers
 Content-Type: application/json
 
 {
-  "name": "Oleg",
+  "name": "Valera",
   "login": "log",
   "password": "password",
   "email": "oleg@oleg.com"
 }
 
 ###
-GET localhost:8080/customers/13
+GET localhost:8080/customers/2
 
 ###
-DELETE localhost:8080/customers/11
+DELETE localhost:8080/customers/2
 
 ###
 POST localhost:8080/products
 Content-Type: application/json
 
 {
-  "name": "Царь-Бомба",
-  "price": 10000000,
-  "amount": 1
+  "name": "Почка",
+  "price": 500000,
+  "amount": 2
 }
 
 ###
@@ -31,40 +31,43 @@ PUT localhost:8080/products
 Content-Type: application/json
 
 {
-  "id": 4,
-  "name": "Сода",
-  "price": 730,
-  "amount": 1
+  "id": 6,
+  "name": "Почка",
+  "price": 700000,
+  "amount": 3
 }
 
 ###
-DELETE localhost:8080/products/2
+DELETE localhost:8080/products/1
 
 ###
-GET localhost:8080/products/5
+GET localhost:8080/products/6
 
 ###
 GET localhost:8080/products?name=Царь
 
 ###
-POST localhost:8080/carts/13
+POST localhost:8080/carts/6
 Content-Type: application/json
 
 {
-  "id": 5,
-  "amount": 2
+  "id": 6,
+  "amount": 1
 }
 
 ###
-PUT localhost:8080/carts/13/product/5
+GET localhost:8080/customers/6
+
+###
+PUT localhost:8080/carts/5/product/1
 Content-Type: application/json
 
 {
-  "amount": 3
+  "amount": 1
 }
 
 ###
-DELETE localhost:8080/carts/12/products/4
+DELETE localhost:8080/carts/5/products/2
 
 ###
 POST localhost:8080/payment
@@ -72,7 +75,7 @@ Content-Type: application/json
 
 {
   "numberCart": "1111",
-  "idUser": 9
+  "idUser": 6
 
 }
 

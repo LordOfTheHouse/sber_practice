@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,9 +30,9 @@ public class ProductController {
      * @return id нового продукта
      */
     @PostMapping
-    public long addProduct(@RequestBody Product product) {
+    public ResponseEntity<?> addProduct(@RequestBody Product product) {
         log.info("Добавление продукта {}", product);
-        return productRepository.save(product);
+        return ResponseEntity.created(URI.create("/products/" + productRepository.save(product))).build();
     }
 
     /**

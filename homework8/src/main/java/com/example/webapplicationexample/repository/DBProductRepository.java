@@ -1,13 +1,16 @@
 package com.example.webapplicationexample.repository;
 
 import com.example.webapplicationexample.model.Product;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementCreator;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.support.GeneratedKeyHolder;
+import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,30 +20,29 @@ import java.util.Optional;
  */
 @Repository
 public class DBProductRepository implements ProductRepository {
-    public static final String JDBC = "jdbc:postgresql://localhost:5432/postgres?user=postgres&password=postgres";
+
+    private final JdbcTemplate jdbcTemplate;
+
+    @Autowired
+    public DBProductRepository(JdbcTemplate jdbcTemplate) {
+        this.jdbcTemplate = jdbcTemplate;
+    }
 
     @Override
     public long save(Product product) {
-        var insertSql = "INSERT INTO katerniuksm.product (name, price) VALUES (?,?);";
+        var insertSql = "INSERT INTO katerniuksm.product (name, price, amount) VALUES (?,?,?);";
 
-        try (var connection = DriverManager.getConnection(JDBC);
-             var prepareStatement = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS)) {
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+        PreparedStatementCreator preparedStatementCreator = connection -> {
+            PreparedStatement preparedStatement = connection.prepareStatement(insertSql, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setString(1, product.getName());
+            preparedStatement.setDouble(2, product.getPrice().doubleValue());
+            preparedStatement.setInt(3, product.getAmount());
+            return preparedStatement;
+        };
+        jdbcTemplate.update(preparedStatementCreator, keyHolder);
+        return (long) (int)keyHolder.getKeys().get("id");
 
-            prepareStatement.setString(1, product.getName());
-            prepareStatement.setDouble(2, product.getPrice().doubleValue());
-            prepareStatement.executeUpdate();
-
-            ResultSet rs = prepareStatement.getGeneratedKeys();
-
-            if (rs.next()) {
-                return rs.getInt(1);
-            } else {
-                throw new RuntimeException("Ошибка при получении идентификатора");
-            }
-
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     @Override
@@ -50,87 +52,76 @@ public class DBProductRepository implements ProductRepository {
                 where id = ?
                 """;
 
-        try (var connection = DriverManager.getConnection(JDBC);
-             var prepareStatement = connection.prepareStatement(selectSql)) {
-            prepareStatement.setLong(1, productId);
+        PreparedStatementCreator preparedStatementCreator = connection -> {
+            var prepareStatement = connection.prepareStatement(selectSql);
+            prepareStatement.setInt(1, (int) productId);
+            return prepareStatement;
+        };
 
-            var resultSet = prepareStatement.executeQuery();
+        RowMapper<Product> productRowMapper = getProductRowMapper();
 
-            if (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                double price = resultSet.getDouble("price");
-                Product product = new Product(id, name, BigDecimal.valueOf(price), 0);
-                return Optional.of(product);
-            }
-            return Optional.empty();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        List<Product> products = jdbcTemplate.query(preparedStatementCreator, productRowMapper);
+
+        return products.stream().findFirst();
     }
 
     @Override
     public List<Product> findAll(String productName) {
         var selectSql = "SELECT * FROM katerniuksm.product where name like ?";
-        List<Product> products = new ArrayList<>();
 
-        try (var connection = DriverManager.getConnection(JDBC);
-             var prepareStatement = connection.prepareStatement(selectSql)) {
+        PreparedStatementCreator preparedStatementCreator = connection -> {
+            var prepareStatement = connection.prepareStatement(selectSql);
             prepareStatement.setString(1, "%" + (productName == null ? "" : productName) + "%");
+            return prepareStatement;
+        };
 
-            var resultSet = prepareStatement.executeQuery();
-            while (resultSet.next()) {
-                int id = resultSet.getInt("id");
-                String name = resultSet.getString("name");
-                double price = resultSet.getDouble("price");
-                Product product = new Product(id, name, BigDecimal.valueOf(price), 0);
+        RowMapper<Product> productRowMapper = getProductRowMapper();
 
-                products.add(product);
-            }
-
-            return products;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        return jdbcTemplate.query(preparedStatementCreator, productRowMapper);
     }
 
     @Override
     public boolean update(Product product) {
-        var selectSql = """
+        var updateSql = """
                 UPDATE katerniuksm.product
                 SET 
                 name = ?,
-                price = ?
+                price = ?,
+                amount = ?
                 where id = ?;
                 """;
 
-        try (var connection = DriverManager.getConnection(JDBC);
-             var prepareStatement = connection.prepareStatement(selectSql)) {
+        PreparedStatementCreator preparedStatementCreator = connection -> {
+            var prepareStatement = connection.prepareStatement(updateSql);
             prepareStatement.setString(1, product.getName());
             prepareStatement.setDouble(2, product.getPrice().doubleValue());
-            prepareStatement.setLong(3, product.getId());
+            prepareStatement.setInt(3, product.getAmount());
+            prepareStatement.setLong(4, product.getId());
 
-            var rows = prepareStatement.executeUpdate();
+            return prepareStatement;
+        };
 
-            return rows > 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        int rows = jdbcTemplate.update(preparedStatementCreator);
+
+        return rows > 0;
+    }
+
+    private static RowMapper<Product> getProductRowMapper() {
+        return (resultSet, rowNum) -> {
+            int id = resultSet.getInt("id");
+            String name = resultSet.getString("name");
+            double price = resultSet.getDouble("price");
+            int amount = resultSet.getInt("amount");
+            return new Product(id, name, BigDecimal.valueOf(price), amount);
+        };
     }
 
     @Override
     public boolean deleteById(long id) {
-        var selectSql = "DELETE FROM katerniuksm.product where id = ?";
-
-        try (var connection = DriverManager.getConnection(JDBC);
-             var prepareStatement = connection.prepareStatement(selectSql)) {
-            prepareStatement.setLong(1, id);
-
-            var rows = prepareStatement.executeUpdate();
-
-            return rows > 0;
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
+        var deleteSql = "DELETE FROM katerniuksm.product where id = ?";
+        var deleteCart = "DELETE FROM katerniuksm.product_client where id_product = ?";
+        jdbcTemplate.update(deleteCart, id);
+        int rows = jdbcTemplate.update(deleteSql, id);
+        return rows > 0;
     }
 }

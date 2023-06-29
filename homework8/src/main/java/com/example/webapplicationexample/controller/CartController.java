@@ -36,13 +36,15 @@ public class CartController {
     public ResponseEntity<Cart> addProduct(@PathVariable long id, @RequestBody Product product) {
         log.info("Добавление продукта {} в корзину", product);
         Optional<Product> p = productRepository.findById(product.getId());
-        if (p.isEmpty()){
+        Optional<Cart> c = cartRepository.getCartById(id);
+
+        if (p.isEmpty() || c.isEmpty()){
             return ResponseEntity.notFound().build();
         }
+        log.info("{} {}", c.get(), p.get());
         p.get().setAmount(product.getAmount());
-        Optional<Cart> cart = cartRepository.addProductInCartById(id, p.get());
-        if (cart.isPresent()) {
-            return ResponseEntity.created(URI.create("cart/"+id)).body(cart.get());
+        if (cartRepository.addProductInCartById(id, p.get())) {
+            return ResponseEntity.created(URI.create("/cart/"+id)).build();
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -59,9 +61,9 @@ public class CartController {
     public ResponseEntity<Cart> updateAmount(@PathVariable long idCart, @PathVariable long idProduct,
                                              @RequestBody Product product) {
         log.info("Изменение количества товара в корзине");
-        Optional<Cart> cart = cartRepository.updateAmountProduct(idCart,idProduct, product.getAmount());
-        if (cart.isPresent()) {
-            return ResponseEntity.accepted().body(cart.get());
+
+        if (cartRepository.updateAmountProduct(idCart,idProduct, product.getAmount())) {
+            return ResponseEntity.accepted().body(cartRepository.getCartById(idCart).get());
         } else {
             return ResponseEntity.notFound().build();
         }

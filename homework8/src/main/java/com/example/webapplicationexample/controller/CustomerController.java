@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.net.URI;
 import java.util.Optional;
 
 /**
@@ -28,9 +29,9 @@ public class CustomerController {
      * @return id зарегестрированного пользователя
      */
     @PostMapping
-    public long register(@RequestBody Customer customer) {
+    public ResponseEntity<?> register(@RequestBody Customer customer) {
         log.info("Добавление пользователя {}", customer);
-        return customerRepository.registration(customer);
+        return ResponseEntity.created(URI.create("/cart/"+customerRepository.registration(customer))).build();
     }
 
     /**

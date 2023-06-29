@@ -2,6 +2,7 @@ package com.example.webapplicationexample.controller;
 
 import com.example.webapplicationexample.exception.AccountNotDefined;
 import com.example.webapplicationexample.exception.InsufficientFundsException;
+import com.example.webapplicationexample.exception.ProductNotInStock;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -16,13 +17,15 @@ public class InsufficientFundsHandler {
 
     @ExceptionHandler(InsufficientFundsException.class)
     public ResponseEntity<?> handleInsufficientExceptions(InsufficientFundsException ex) {
-        log.info("Недостаточно средств");
-        return  ResponseEntity.badRequest().build();
+        return  ResponseEntity.badRequest().body(ex.getMessage());
     }
     @ExceptionHandler(AccountNotDefined.class)
     public ResponseEntity<?> handleAccountNotDefinedExceptions(AccountNotDefined ex) {
-        log.info("Аккаунт не определен со стороны банка");
-        return  ResponseEntity.badRequest().build();
+        return  ResponseEntity.badRequest().body(ex.getMessage());
+    }
 
+    @ExceptionHandler(ProductNotInStock.class)
+    public ResponseEntity<?> productNotInStockException(ProductNotInStock ex) {
+        return  ResponseEntity.badRequest().body(ex.getMessage());
     }
 }

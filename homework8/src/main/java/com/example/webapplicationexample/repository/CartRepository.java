@@ -16,7 +16,7 @@ public interface CartRepository {
      * @param product - продукт
      * @return обновленную корзину
      */
-    Optional<Cart> addProductInCartById(long id, Product product);
+    boolean addProductInCartById(long id, Product product);
 
     /**
      * Обновляет информацию о продукте
@@ -25,7 +25,7 @@ public interface CartRepository {
      * @param amount - количество продукта
      * @return обновленную корзину
      */
-    Optional<Cart> updateAmountProduct(long idCart, long idProduct,int amount);
+    boolean updateAmountProduct(long idCart, long idProduct,int amount);
 
     /**
      * Удаляет продукт из корзины
@@ -39,7 +39,7 @@ public interface CartRepository {
      * Генерирует простую корзину
      * @return корзину
      */
-    Cart generate(long id);
+    long generate();
 
     /**
      * Возвращает сумму которую должен заплатит пользователь за покупку всех товаров
@@ -47,5 +47,7 @@ public interface CartRepository {
      * @return сумму
      */
     BigDecimal getSumPriceCart(long userId);
+
+    Optional<Cart> getCartById(long idCart);
 
 }

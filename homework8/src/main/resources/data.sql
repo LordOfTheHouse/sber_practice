@@ -1,33 +1,35 @@
 create schema if not exists katerniuksm;
 
-create table katerniuksm.product
+create table product
 (
-    id    integer generated always as identity
+    id     integer generated always as identity
         primary key,
-    name  varchar(255) not null,
-    price numeric      not null
+    name   varchar(255) not null,
+    price  numeric      not null,
+    amount integer          not null
 );
 
-create table katerniuksm.cart
+create table cart
 (
     id        integer generated always as identity
         primary key,
     promocode varchar(255)
 );
 
-create table katerniuksm.client
+create table client
 (
-    id       integer generated always as identity,
+    id       integer generated always as identity
+        primary key,
     name     varchar(255) not null,
     username varchar(255) not null,
     password varchar(255) not null,
     cart_id  integer      not null
         constraint client_cart_id_fk
             references katerniuksm.cart,
-    email varchar(255) not null
+    email    varchar(255) not null
 );
 
-create table katerniuksm.product_client
+create table product_client
 (
     id         integer generated always as identity
         primary key,
@@ -40,13 +42,11 @@ create table katerniuksm.product_client
     count      integer not null
 );
 
-create table katerniuksm.promocodes
+create table promocodes
 (
-    promocode  varchar(255)
+    promocode varchar(255)
         primary key,
-    percent integer not null
+    percent   integer not null
 
 );
 
-insert into katerniuksm.promocodes values('GOD', 10);
-update katerniuksm.cart set promocode='GOD' where id=9;
