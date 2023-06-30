@@ -31,7 +31,7 @@ public class CustomerController {
     @PostMapping
     public ResponseEntity<?> register(@RequestBody Customer customer) {
         log.info("Добавление пользователя {}", customer);
-        return ResponseEntity.created(URI.create("/cart/"+customerRepository.registration(customer))).build();
+        return ResponseEntity.created(URI.create("/user/"+customerRepository.registration(customer))).build();
     }
 
     /**

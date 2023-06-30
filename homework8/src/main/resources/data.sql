@@ -1,6 +1,7 @@
+
 create schema if not exists katerniuksm;
 
-create table product
+create table if not exists product
 (
     id     integer generated always as identity
         primary key,
@@ -9,14 +10,14 @@ create table product
     amount integer          not null
 );
 
-create table cart
+create table if not exists cart
 (
     id        integer generated always as identity
         primary key,
     promocode varchar(255)
 );
 
-create table client
+create table if not exists client
 (
     id       integer generated always as identity
         primary key,
@@ -25,24 +26,24 @@ create table client
     password varchar(255) not null,
     cart_id  integer      not null
         constraint client_cart_id_fk
-            references katerniuksm.cart,
+            references cart,
     email    varchar(255) not null
 );
 
-create table product_client
+create table if not exists product_client
 (
     id         integer generated always as identity
         primary key,
     id_product integer not null
         constraint product_client_products_id_fk
-            references katerniuksm.product,
+            references product,
     id_cart    integer not null
         constraint product_client_cart_id_fk
-            references katerniuksm.cart,
+            references cart,
     count      integer not null
 );
 
-create table promocodes
+ create table if not exists promocodes
 (
     promocode varchar(255)
         primary key,
