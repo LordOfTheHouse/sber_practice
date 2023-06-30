@@ -11,7 +11,7 @@ Content-Type: application/json
 }
 
 ###
-GET localhost:8080/customers/2
+GET localhost:8080/customers/1
 
 ###
 DELETE localhost:8080/customers/1
@@ -21,9 +21,9 @@ POST localhost:8080/products
 Content-Type: application/json
 
 {
-  "name": "Почка",
-  "price": 500000,
-  "amount": 2
+  "name": "Дочка",
+  "price": 1000,
+  "amount": 50
 }
 
 ###
@@ -32,7 +32,7 @@ Content-Type: application/json
 
 {
   "id": 1,
-  "name": "Почка",
+  "name": "Лосось",
   "price": 500000,
   "amount": 2
 }
@@ -41,10 +41,10 @@ Content-Type: application/json
 DELETE localhost:8080/products/1
 
 ###
-GET localhost:8080/products/2
+GET localhost:8080/products/1
 
 ###
-GET localhost:8080/products?name=Царь
+GET localhost:8080/products?name=ка
 
 ###
 POST localhost:8080/carts/2
@@ -52,7 +52,7 @@ Content-Type: application/json
 
 {
   "id": 2,
-  "amount": 5
+  "amount": 1
 }
 
 ###
@@ -67,7 +67,27 @@ Content-Type: application/json
 }
 
 ###
-DELETE localhost:8080/carts/5/products/2
+DELETE localhost:8080/carts/2/products/2
+
+###
+POST localhost:8080/promocode
+Content-Type: application/json
+
+{
+  "promocode": "sale20",
+  "percent": 20
+}
+
+###
+GET localhost:8080/promocode/sale20
+
+###
+PUT localhost:8080/promocode/sale15
+Content-Type: application/json
+
+{
+  "percent": 15
+}
 
 ###
 POST localhost:8080/payment
@@ -75,7 +95,8 @@ Content-Type: application/json
 
 {
   "numberCart": "1111",
-  "idUser": 2
+  "idUser": 2,
+  "promoCode": "sale20"
 
 }
 
