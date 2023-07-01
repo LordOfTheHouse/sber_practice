@@ -35,6 +35,9 @@ public class ProductController {
     @PostMapping
     public ResponseEntity<?> addProduct(@RequestBody Product product) {
         log.info("Добавление продукта {}", product);
+        if(product.getName() == null || product.getPrice() == null){
+            return ResponseEntity.badRequest().body("Заполните все возможные поля");
+        }
         if(product.getAmount() < 0){
             return ResponseEntity.badRequest().body("Количество товара не может быть отрицательным числом");
         }
@@ -48,7 +51,11 @@ public class ProductController {
      */
     @GetMapping
     public List<Product> getProducts(@RequestParam(required = false) String name) {
+
         log.info("Поиск продуктов по имени {}", name);
+        if(name == null){
+            name="";
+        }
         return productService.findAll(name);
     }
 

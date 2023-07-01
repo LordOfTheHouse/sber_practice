@@ -18,4 +18,6 @@ public interface ProductService {
     boolean update(Product product);
 
     boolean deleteById(long id);
+
+    boolean isProductExists(long id);
 }

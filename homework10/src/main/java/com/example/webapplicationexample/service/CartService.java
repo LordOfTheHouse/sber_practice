@@ -11,8 +11,8 @@ import java.util.List;
 public interface CartService {
     boolean saveProductInCart(long userId, Product product);
     boolean updateAmountProduct(long userId, Product product);
-    boolean deleteProductInCart(long userId, long productId);
     List<Product> findProductsInCart(long userId);
 
     boolean deleteAllClient(Customer customer);
+    boolean deleteProductInCart(long userId, long productId);
 }

@@ -27,8 +27,11 @@ public class PromocodeController {
     @PostMapping
     public ResponseEntity<?> addProduct(@RequestBody Promocode promocode) {
         log.info("Добавление промокода {}", promocode);
+        if(promocode.getPromocode() == null){
+            return ResponseEntity.badRequest().body("Заполните графу промокод");
+        }
         if(promocode.getPercent()<0 || promocode.getPercent()>100){
-            return ResponseEntity.badRequest().body("проценты долны быть от 0 до 100");
+            return ResponseEntity.badRequest().body("проценты должны быть от 0 до 100");
         }
         promocodesService.save(promocode);
         return ResponseEntity.created(URI.create("/" + promocode.getPromocode())).build();

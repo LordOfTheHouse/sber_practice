@@ -1,13 +1,17 @@
 package com.example.webapplicationexample.controller;
 
+import com.example.webapplicationexample.model.Customer;
 import com.example.webapplicationexample.model.Product;
 import com.example.webapplicationexample.service.CartService;
+import com.example.webapplicationexample.service.ClientService;
+import com.example.webapplicationexample.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Optional;
 
 /**
  * Управление запросами связанными с корзиной
@@ -18,28 +22,37 @@ import java.net.URI;
 public class CartController {
 
     CartService cartService;
+    ClientService clientService;
+    ProductService productService;
 
     @Autowired
-    public CartController(CartService cartService) {
+    public CartController(CartService cartService, ClientService clientService, ProductService productService) {
         this.cartService = cartService;
+        this.clientService = clientService;
+        this.productService = productService;
     }
 
     /**
      * Добавляет продукт в корзину
-     * @param id - индификатор корзины
+     * @param idUser - индификатор корзины
      * @param product - продукт
      * @return корзину после изменений
      */
-    @PostMapping("/{id}")
-    public ResponseEntity<?> addProduct(@PathVariable long id, @RequestBody Product product) {
+    @PostMapping("/{idUser}")
+    public ResponseEntity<?> addProduct(@PathVariable long idUser, @RequestBody Product product) {
         log.info("Добавление продукта {} в корзину", product);
 
         if(product.getAmount() < 0){
             return ResponseEntity.badRequest().body("Количество товара не может быть отрицательным числом");
         }
-
-        if (cartService.saveProductInCart(id, product)) {
-            return ResponseEntity.created(URI.create("/cart/"+id +"/product/"+product.getId())).build();
+        if(!productService.isProductExists(product.getId())){
+            return ResponseEntity.badRequest().body("Продукта с данным id не существует");
+        }
+        if(!clientService.isClientExist(idUser)){
+            return ResponseEntity.badRequest().body("Клиента с данным id не существует");
+        }
+        if (cartService.saveProductInCart(idUser, product)) {
+            return ResponseEntity.created(URI.create("/cart/"+idUser +"/product/"+product.getId())).build();
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -47,21 +60,27 @@ public class CartController {
 
     /**
      * Обновляет количество определенного продукта в корзине
-     * @param idCart - индификатор корзины
+     * @param idUser - индификатор корзины
      * @param idProduct - индификатор продукта
      * @param product - продукт
      * @return корзину после изменений
      */
-    @PutMapping("/{idCart}/product/{idProduct}")
-    public ResponseEntity<?> updateAmount(@PathVariable long idCart, @PathVariable long idProduct,
+    @PutMapping("/{idUser}/product/{idProduct}")
+    public ResponseEntity<?> updateAmount(@PathVariable long idUser, @PathVariable long idProduct,
                                           @RequestBody Product product) {
         log.info("Изменение количества товара в корзине");
         if(product.getAmount() < 0){
             return ResponseEntity.badRequest().body("Количество товара не может быть отрицательным числом");
         }
+        if(!productService.isProductExists(idProduct)){
+            return ResponseEntity.badRequest().body("Продукта с данным id не существует");
+        }
+        if(!clientService.isClientExist(idUser)){
+            return ResponseEntity.badRequest().body("Клиента с данным id не существует");
+        }
         product.setId(idProduct);
-        if (cartService.updateAmountProduct(idCart, product)) {
-            return ResponseEntity.ok().body(cartService.findProductsInCart(idCart));
+        if (cartService.updateAmountProduct(idUser, product)) {
+            return ResponseEntity.ok().body(cartService.findProductsInCart(idUser));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -76,7 +95,14 @@ public class CartController {
     @DeleteMapping("/{idCart}/products/{productId}")
     public ResponseEntity<?> deleteProduct(@PathVariable long idCart, @PathVariable long productId) {
         log.info("Удаление продукта {} из корзины", productId);
+        Optional<Customer> customer = clientService.findById(idCart);
+        Optional<Product> product = productService.findById(productId);
+        if(customer.isEmpty() || product.isEmpty()){
+            return ResponseEntity.notFound().build();
+        }
+
         boolean isDeleted = cartService.deleteProductInCart(idCart, productId);
+
         if (isDeleted) {
             return ResponseEntity.noContent().build();
         } else {

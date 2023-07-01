@@ -15,5 +15,6 @@ public interface ClientService {
 
     Optional<Customer> findById(long userId);
     boolean deleteById(long userId);
+    boolean isClientExist(long userId);
 
 }

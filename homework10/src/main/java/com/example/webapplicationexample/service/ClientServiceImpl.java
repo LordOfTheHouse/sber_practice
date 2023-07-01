@@ -14,7 +14,7 @@ import java.util.Optional;
  * Сервис для взаимодействия с клиентом
  */
 @Service
-public class ClientServiceImpl implements ClientService{
+public class ClientServiceImpl implements ClientService {
 
     CustomerRepository customerRepository;
     CartService cartService;
@@ -35,13 +35,18 @@ public class ClientServiceImpl implements ClientService{
     }
 
     @Override
-    @Transactional
     public boolean deleteById(long userId) {
         Customer customer = new Customer();
         customer.setId(userId);
         cartService.deleteAllClient(customer);
         customerRepository.deleteById(userId);
         return true;
+    }
+
+    @Override
+    public boolean isClientExist(long userId) {
+        Optional<Customer> customer = findById(userId);
+        return customer.isPresent();
     }
 
 }

@@ -45,7 +45,7 @@ public class PaymentRealiseService implements PaymentService{
 
         List<Product> productList = cartService.findProductsInCart(transfer.getIdUser());
 
-        isEmptyProduct(productList);
+        isEmptyCart(productList);
 
         BankAccount bankAccount = new BankAccount(transfer.getNumberCart(), BigDecimal.valueOf(0));
 
@@ -54,7 +54,7 @@ public class PaymentRealiseService implements PaymentService{
                 .map(CountsAmountToPaid(transfer, bankAccount))
                 .toList();
 
-        checkUpdate(productList, productsInWarehouse);
+        isUpdateProductsHomework(productList, productsInWarehouse);
 
         Optional<Promocode> promocode = promocodesService.findPromocode(transfer.getPromoCode());
         if(promocode.isEmpty()){
@@ -69,18 +69,25 @@ public class PaymentRealiseService implements PaymentService{
 
     }
 
+
+    /**
+     * Проверяет хватат ли у пользователя денег на покупку
+     */
     private BigDecimal checkMoneyAccauntClient(Transfer transfer, BankAccount bankAccount) {
         return bankProxy.checkMeansCustomer(transfer.getNumberCart(), bankAccount.getSum());
     }
 
+    /**
+     * Возрващает итоговую цену
+     */
     private BigDecimal getFinalPrice(BankAccount bankAccount, double coefficient) {
         return bankAccount.getSum().multiply(BigDecimal.valueOf(coefficient));
     }
 
     /**
-     * Проверяет все ли товары были успешно обновлены
+     * Проверяет все ли товары были изъяты со склада
      */
-    private void checkUpdate(List<Product> productList, List<Product> productsInWarehouse) {
+    private void isUpdateProductsHomework(List<Product> productList, List<Product> productsInWarehouse) {
         if(productList.size() != productsInWarehouse.size()){
             throw new ProductNotInStock("Товара на складе не достаточно");
         }
@@ -130,7 +137,7 @@ public class PaymentRealiseService implements PaymentService{
      * Проверяет, что корзщина не пуста
      * @param productList
      */
-    private void isEmptyProduct(List<Product> productList) {
+    private void isEmptyCart(List<Product> productList) {
         if(productList.isEmpty()){
             throw new AccountNotDefined("Корзина пуста");
         }

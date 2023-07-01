@@ -11,19 +11,19 @@ Content-Type: application/json
 }
 
 ###
-GET localhost:8080/customers/1
+GET localhost:8080/customers/3
 
 ###
-DELETE localhost:8080/customers/1
+DELETE localhost:8080/customers/2
 
 ###
 POST localhost:8080/products
 Content-Type: application/json
 
 {
-  "name": "Дочка",
-  "price": 1000,
-  "amount": 50
+  "name": "Пол дома",
+  "price": 500000,
+  "amount": 3
 }
 
 ###
@@ -38,36 +38,36 @@ Content-Type: application/json
 }
 
 ###
-DELETE localhost:8080/products/1
+DELETE localhost:8080/products/3
 
 ###
-GET localhost:8080/products/1
+GET localhost:8080/products/3
 
 ###
-GET localhost:8080/products?name=ка
+GET localhost:8080/products
 
 ###
-POST localhost:8080/carts/2
+POST localhost:8080/carts/3
 Content-Type: application/json
 
 {
-  "id": 2,
+  "id": 3,
   "amount": 1
 }
 
 ###
-GET localhost:8080/customers/2
+GET localhost:8080/customers/3
 
 ###
-PUT localhost:8080/carts/2/product/2
+PUT localhost:8080/carts/3/product/3
 Content-Type: application/json
 
 {
-  "amount": 2
+  "amount": 1
 }
 
 ###
-DELETE localhost:8080/carts/2/products/2
+DELETE localhost:8080/carts/3/products/3
 
 ###
 POST localhost:8080/promocode
@@ -95,7 +95,7 @@ Content-Type: application/json
 
 {
   "numberCart": "1111",
-  "idUser": 2,
+  "idUser": 3,
   "promoCode": "sale20"
 
 }

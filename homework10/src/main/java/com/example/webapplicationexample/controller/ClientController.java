@@ -38,6 +38,12 @@ public class ClientController {
     @PostMapping
     public ResponseEntity<?> register(@RequestBody Customer customer) {
         log.info("Добавление пользователя {}", customer);
+        if(customer.getName() == null
+                || customer.getEmail() == null
+                || customer.getLogin() == null
+                || customer.getPassword() == null){
+            return ResponseEntity.badRequest().body("Введите данные клиента");
+        }
         return ResponseEntity.created(URI.create("/user/"+clientService.save(customer))).build();
     }
 

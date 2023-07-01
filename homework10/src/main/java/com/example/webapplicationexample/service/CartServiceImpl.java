@@ -58,12 +58,11 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public boolean deleteProductInCart(long userId, long productId) {
-
+    public boolean deleteProductInCart(long idUser, long idProduct) {
         Product product = new Product();
-        product.setId(productId);
+        product.setId(idProduct);
         Customer customer = new Customer();
-        customer.setId(userId);
+        customer.setId(idUser);
         Optional<Cart> cart = cartRepository.findByProductAndClient(product, customer);
         if(cart.isEmpty()){
             return false;

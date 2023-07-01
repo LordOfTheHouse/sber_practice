@@ -48,4 +48,10 @@ public class ProductServiceImpl implements ProductService{
         productRepository.deleteById(id);
         return true;
     }
+
+    @Override
+    public boolean isProductExists(long id) {
+        Optional<Product> product = findById(id);
+        return product.isPresent();
+    }
 }
