@@ -13,7 +13,7 @@ public class CroppedCustomer{
 
     private String name;
     private String email;
-    private List<Product> cart;
+    private List<CroppedProduct> cart;
 
     public CroppedCustomer(Customer customer){
         this.email = customer.getEmail();

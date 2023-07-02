@@ -19,5 +19,4 @@ public interface CartRepository extends JpaRepository<Cart, Long> {
     List<Cart> findByClient(Customer customer);
     void deleteAllByClient(Customer customer);
 
-
 }

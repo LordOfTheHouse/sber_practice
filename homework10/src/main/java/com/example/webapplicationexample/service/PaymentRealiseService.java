@@ -2,10 +2,7 @@ package com.example.webapplicationexample.service;
 
 import com.example.webapplicationexample.exception.AccountNotDefined;
 import com.example.webapplicationexample.exception.ProductNotInStock;
-import com.example.webapplicationexample.model.BankAccount;
-import com.example.webapplicationexample.model.Product;
-import com.example.webapplicationexample.model.Promocode;
-import com.example.webapplicationexample.model.Transfer;
+import com.example.webapplicationexample.model.*;
 import com.example.webapplicationexample.proxy.BankProxy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,13 +40,13 @@ public class PaymentRealiseService implements PaymentService{
     @Override
     public BigDecimal pay(Transfer transfer) {
 
-        List<Product> productList = cartService.findProductsInCart(transfer.getIdUser());
+        List<CroppedProduct> productList = cartService.findProductsInCart(transfer.getIdUser());
 
         isEmptyCart(productList);
 
         BankAccount bankAccount = new BankAccount(transfer.getNumberCart(), BigDecimal.valueOf(0));
 
-        List<Product> productsInWarehouse = productList.stream()
+        List<CroppedProduct> productsInWarehouse = productList.stream()
                 .filter(checkAvailabilityAmountInHomework())
                 .map(CountsAmountToPaid(transfer, bankAccount))
                 .toList();
@@ -87,7 +84,7 @@ public class PaymentRealiseService implements PaymentService{
     /**
      * Проверяет все ли товары были изъяты со склада
      */
-    private void isUpdateProductsHomework(List<Product> productList, List<Product> productsInWarehouse) {
+    private void isUpdateProductsHomework(List<CroppedProduct> productList, List<CroppedProduct> productsInWarehouse) {
         if(productList.size() != productsInWarehouse.size()){
             throw new ProductNotInStock("Товара на складе не достаточно");
         }
@@ -96,7 +93,7 @@ public class PaymentRealiseService implements PaymentService{
     /**
      * Подсчитывает сумму к оплате
      */
-    private Function<Product, Product> CountsAmountToPaid(Transfer transfer, BankAccount bankAccount) {
+    private Function<CroppedProduct, CroppedProduct> CountsAmountToPaid(Transfer transfer, BankAccount bankAccount) {
         return product -> {
 
             Optional<Product> productInWarehouse = productService.findById(product.getId());
@@ -112,7 +109,7 @@ public class PaymentRealiseService implements PaymentService{
     /**
      * Обновялет данные о покупке в БД
      */
-    private void updateDataInBD(Transfer transfer, Product product, Optional<Product> productInWarehouse) {
+    private void updateDataInBD(Transfer transfer, CroppedProduct product, Optional<Product> productInWarehouse) {
         Product newProduct = new Product();
         newProduct.setId(product.getId());
         newProduct.setName(product.getName());
@@ -126,7 +123,7 @@ public class PaymentRealiseService implements PaymentService{
     /**
      * Проверяет наличие товара на складе
      */
-    private Predicate<Product> checkAvailabilityAmountInHomework() {
+    private Predicate<CroppedProduct> checkAvailabilityAmountInHomework() {
         return product -> {
             log.info("{} {}", productService.findById(product.getId()).get().getAmount(), product.getAmount());
             return productService.findById(product.getId()).get().getAmount() > product.getAmount();
@@ -137,7 +134,7 @@ public class PaymentRealiseService implements PaymentService{
      * Проверяет, что корзщина не пуста
      * @param productList
      */
-    private void isEmptyCart(List<Product> productList) {
+    private void isEmptyCart(List<CroppedProduct> productList) {
         if(productList.isEmpty()){
             throw new AccountNotDefined("Корзина пуста");
         }

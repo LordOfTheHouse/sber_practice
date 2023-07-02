@@ -19,5 +19,5 @@ public interface ProductService {
 
     boolean deleteById(long id);
 
-    boolean isProductExists(long id);
+    boolean existsById(long id);
 }

@@ -1,13 +1,11 @@
 package com.example.webapplicationexample.service;
 
 import com.example.webapplicationexample.model.Customer;
-import com.example.webapplicationexample.model.Product;
 import com.example.webapplicationexample.repository.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -17,11 +15,9 @@ import java.util.Optional;
 public class ClientServiceImpl implements ClientService {
 
     CustomerRepository customerRepository;
-    CartService cartService;
     @Autowired
-    public ClientServiceImpl(CustomerRepository customerRepository, CartService cartService) {
+    public ClientServiceImpl(CustomerRepository customerRepository) {
         this.customerRepository = customerRepository;
-        this.cartService = cartService;
     }
 
     @Override
@@ -34,19 +30,16 @@ public class ClientServiceImpl implements ClientService {
         return customerRepository.findById(userId);
     }
 
+    @Transactional
     @Override
     public boolean deleteById(long userId) {
-        Customer customer = new Customer();
-        customer.setId(userId);
-        cartService.deleteAllClient(customer);
         customerRepository.deleteById(userId);
         return true;
     }
 
     @Override
-    public boolean isClientExist(long userId) {
-        Optional<Customer> customer = findById(userId);
-        return customer.isPresent();
+    public boolean existsById(long userId) {
+        return customerRepository.existsById(userId);
     }
 
 }

@@ -50,8 +50,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public boolean isProductExists(long id) {
-        Optional<Product> product = findById(id);
-        return product.isPresent();
+    public boolean existsById(long id) {
+        return productRepository.existsById(id);
     }
 }

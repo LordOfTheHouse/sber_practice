@@ -1,0 +1,22 @@
+###
+POST localhost:8080/carts/1
+Content-Type: application/json
+
+{
+  "id": 1,
+  "amount": 50
+}
+
+###
+GET localhost:8080/customers/3
+
+###
+PUT localhost:8080/carts/1/product/1
+Content-Type: application/json
+
+{
+  "amount": 30
+}
+
+###
+DELETE localhost:8080/carts/3/products/3

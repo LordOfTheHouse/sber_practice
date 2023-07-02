@@ -28,5 +28,7 @@ public class Cart {
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
     private Customer client;
+
+    @Column(nullable = false)
     private int count;
 }

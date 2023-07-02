@@ -45,10 +45,10 @@ public class CartController {
         if(product.getAmount() < 0){
             return ResponseEntity.badRequest().body("Количество товара не может быть отрицательным числом");
         }
-        if(!productService.isProductExists(product.getId())){
+        if(!productService.existsById(product.getId())){
             return ResponseEntity.badRequest().body("Продукта с данным id не существует");
         }
-        if(!clientService.isClientExist(idUser)){
+        if(!clientService.existsById(idUser)){
             return ResponseEntity.badRequest().body("Клиента с данным id не существует");
         }
         if (cartService.saveProductInCart(idUser, product)) {
@@ -72,10 +72,10 @@ public class CartController {
         if(product.getAmount() < 0){
             return ResponseEntity.badRequest().body("Количество товара не может быть отрицательным числом");
         }
-        if(!productService.isProductExists(idProduct)){
+        if(!productService.existsById(idProduct)){
             return ResponseEntity.badRequest().body("Продукта с данным id не существует");
         }
-        if(!clientService.isClientExist(idUser)){
+        if(!clientService.existsById(idUser)){
             return ResponseEntity.badRequest().body("Клиента с данным id не существует");
         }
         product.setId(idProduct);

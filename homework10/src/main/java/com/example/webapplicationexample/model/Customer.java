@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -28,4 +29,6 @@ public class Customer {
     private String login;
     @Column(nullable = false)
     private String password;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<Cart> carts = new ArrayList<>();
 }

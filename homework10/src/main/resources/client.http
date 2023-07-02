@@ -1,0 +1,16 @@
+###
+POST localhost:8080/customers
+Content-Type: application/json
+
+{
+  "name": "Valera",
+  "login": "log",
+  "password": "password",
+  "email": "oleg@oleg.com"
+}
+
+###
+GET localhost:8080/customers/1
+
+###
+DELETE localhost:8080/customers/1

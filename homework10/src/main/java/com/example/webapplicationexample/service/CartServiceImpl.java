@@ -1,6 +1,7 @@
 package com.example.webapplicationexample.service;
 
 import com.example.webapplicationexample.model.Cart;
+import com.example.webapplicationexample.model.CroppedProduct;
 import com.example.webapplicationexample.model.Customer;
 import com.example.webapplicationexample.model.Product;
 import com.example.webapplicationexample.repository.CartRepository;
@@ -72,15 +73,16 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public List<Product> findProductsInCart(long userId) {
+    public List<CroppedProduct> findProductsInCart(long userId) {
         Customer customer = new Customer();
         customer.setId(userId);
 
         return cartRepository.findByClient(customer).stream()
-                .map(cart -> new Product(cart.getProduct().getId()
-                            , cart.getProduct().getName()
-                            , cart.getProduct().getPrice()
-                            , cart.getCount())
+                .map(cart -> {
+                            CroppedProduct croppedProduct = new CroppedProduct(cart.getProduct());
+                            croppedProduct.setAmount(cart.getCount());
+                            return croppedProduct;
+                        }
                 )
                 .toList();
     }
