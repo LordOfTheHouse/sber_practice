@@ -1,5 +1,6 @@
 package com.example.webapplicationexample.controller;
 
+import com.example.webapplicationexample.model.CroppedProduct;
 import com.example.webapplicationexample.model.Product;
 import com.example.webapplicationexample.repository.ProductRepository;
 import com.example.webapplicationexample.service.ProductService;
@@ -50,13 +51,16 @@ public class ProductController {
      * @return список продуктов
      */
     @GetMapping
-    public List<Product> getProducts(@RequestParam(required = false) String name) {
+    public List<CroppedProduct> getProducts(@RequestParam(required = false) String name) {
 
         log.info("Поиск продуктов по имени {}", name);
         if(name == null){
             name="";
         }
-        return productService.findAll(name);
+        return productService.findAll(name)
+                .stream()
+                .map(CroppedProduct::new)
+                .toList();
     }
 
     /**
@@ -65,12 +69,12 @@ public class ProductController {
      * @return продукт
      */
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProducts(@PathVariable long id) {
+    public ResponseEntity<CroppedProduct> getProducts(@PathVariable long id) {
         log.info("Поиск продуктов по id: {}", id);
         Optional<Product> product = productService.findById(id);
 
         if (product.isPresent()) {
-            return ResponseEntity.ok().body(product.get());
+            return ResponseEntity.ok().body(new CroppedProduct(product.get()));
         } else {
             return ResponseEntity.notFound().build();
         }
@@ -88,7 +92,7 @@ public class ProductController {
             return ResponseEntity.badRequest().body("Количество товара не может быть отрицательным числом");
         }
         productService.update(product);
-        return ResponseEntity.ok().body(product);
+        return ResponseEntity.ok().body(new CroppedProduct(product));
     }
 
     /**

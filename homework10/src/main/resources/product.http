@@ -12,17 +12,17 @@ PUT localhost:8080/products
 Content-Type: application/json
 
 {
-  "id": 1,
+  "id": 2,
   "name": "Лосось",
   "price": 500000,
   "amount": 2
 }
 
 ###
-DELETE localhost:8080/products/3
+DELETE localhost:8080/products/1
 
 ###
-GET localhost:8080/products/3
+GET localhost:8080/products/1
 
 ###
 GET localhost:8080/products

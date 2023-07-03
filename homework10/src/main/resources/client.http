@@ -10,7 +10,7 @@ Content-Type: application/json
 }
 
 ###
-GET localhost:8080/customers/1
+GET localhost:8080/customers/2
 
 ###
 DELETE localhost:8080/customers/1

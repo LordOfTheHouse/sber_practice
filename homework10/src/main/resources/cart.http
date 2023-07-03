@@ -1,22 +1,22 @@
 ###
-POST localhost:8080/carts/1
+POST localhost:8080/carts/2
 Content-Type: application/json
 
 {
-  "id": 1,
-  "amount": 50
+  "id": 3,
+  "amount": 1
 }
 
 ###
-GET localhost:8080/customers/3
+GET localhost:8080/customers/2
 
 ###
 PUT localhost:8080/carts/1/product/1
 Content-Type: application/json
 
 {
-  "amount": 30
+  "amount": 2
 }
 
 ###
-DELETE localhost:8080/carts/3/products/3
+DELETE localhost:8080/carts/2/products/1
