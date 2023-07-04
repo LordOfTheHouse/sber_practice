@@ -2,7 +2,7 @@ import {Card, Button, InputNumber, Input} from 'antd';
 import React, {useState} from 'react';
 import {useDispatch} from "react-redux";
 import {remove, edit} from "../slices/ProductsSlice";
-import {addToCart} from "../slices/CartSlice";
+import {addToCart, update, removeFromCart} from "../slices/CartSlice";
 
 export const Product = ({product}) => {
 
@@ -14,14 +14,14 @@ export const Product = ({product}) => {
     const add = () => {
         // Добавить логику для добавления товара в корзину
 
-        const newProductInCart = {
+        dispatch(addToCart({
             id: product.id,
             name: product.name,
             price: product.price,
             amount: 1,
-        }
-        dispatch(addToCart(newProductInCart));
+        }));
     };
+
     const editProduct = () => {
         if (isEditing) {
             const newProduct = {
@@ -29,12 +29,20 @@ export const Product = ({product}) => {
                 name: editedName,
                 price: editedPrice,
             };
+
             dispatch(edit(newProduct));
+            dispatch(update(newProduct));
             setEditing(false);
 
         } else {
             setEditing(true);
         }
+    };
+
+    const removeProduct = () => {
+        // Добавить логику для добавления товара в корзину
+        dispatch(remove(product));
+        dispatch(removeFromCart(product));
     };
 
     return (
@@ -64,7 +72,7 @@ export const Product = ({product}) => {
                 <Button style={{marginRight: '8px'}} onClick={editProduct}>
                     {isEditing ? 'Save' : 'Edit'}
                 </Button>
-                <Button onClick={() => dispatch(remove(product))}>
+                <Button onClick={removeProduct}>
                     Delete
                 </Button>
             </div>

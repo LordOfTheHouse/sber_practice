@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit'
 import logo from "../logo.svg"
-import {removeFromCart, update} from './CartSlice';
+
 
 export const productsSlice = createSlice({
     name: 'products',
@@ -58,11 +58,11 @@ export const productsSlice = createSlice({
                         name: name || product.name,
                         price: price || product.price,
                     };
-                    update(newProduct);
                     return newProduct;
                 }
                 return product;
             });
+
             state.query = state.products
         },
         searchProducts: (state, action) => {

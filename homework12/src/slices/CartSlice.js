@@ -49,14 +49,13 @@ export const cartSlice = createSlice({
             state.cart = state.cart.map(product => {
                 if (product.id === nProduct.id) {
                     return {
-                        ...nProduct,
+                        ...product,
                         name: nProduct.name || product.name,
                         price: nProduct.price || product.price,
                     };
                 }
                 return product;
             });
-            alert("kek")
             let total = 0;
             for (const item of state.cart) {
                 total += item.price * item.amount;
