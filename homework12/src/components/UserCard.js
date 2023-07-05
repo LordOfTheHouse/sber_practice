@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
-import { Card, Button, Input } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import { edit, logout } from '../slices/UserSlice';
-import { AuthForm } from './AutoForm';
+import React, {useState} from 'react';
+import {Card, Button, Input} from 'antd';
+import {useDispatch, useSelector} from 'react-redux';
+import {edit, logout, saveCart} from '../slices/UserSlice';
+import {clearCart} from "../slices/CartSlice";
+import {AuthForm} from './AutoForm';
 
 export const UserCard = () => {
     const user = useSelector((state) => state.user.user);
-    const auth = useSelector((state) => state.user.isAuth);
+    const cart = useSelector((state) => state.cart.cart);
+    const isAuthForm = useSelector((state) => state.user.isAuth);
     const [isEditing, setEditing] = useState(false);
     const [editedEmail, setEditedEmail] = useState(user.email);
     const [editedName, setEditedName] = useState(user.name);
@@ -15,24 +17,26 @@ export const UserCard = () => {
     const editUser = () => {
         if (isEditing) {
             const eUser = {
+                id: user.id,
                 name: editedName,
                 email: editedEmail,
             };
             dispatch(edit(eUser));
-            //setEditing(false);
+            setEditing(false);
         } else {
-            //setEditing(true);
+            setEditing(true);
         }
     };
 
     const handleLogout = () => {
-        // Реализуйте логику выхода из аккаунта
+        dispatch(saveCart(cart));
         dispatch(logout());
+        dispatch(clearCart());
     };
 
     return (
         <>
-            {auth ? (
+            {isAuthForm ? (
                 <AuthForm/>
             ) : (
                 <Card
@@ -40,7 +44,7 @@ export const UserCard = () => {
                     style={{
                         width: 240,
                     }}
-                    cover={<img alt="example" src={user.image} />}
+                    cover={<img alt="example" src={user.image}/>}
                 >
                     <Card.Meta
                         title={
@@ -75,7 +79,7 @@ export const UserCard = () => {
                     >
                         <Button
                             type="primary"
-                            style={{ marginRight: '8px', width: '100%' }}
+                            style={{marginRight: '8px', width: '100%'}}
                             onClick={editUser}
                         >
                             {isEditing ? 'Save' : 'Edit'}
@@ -91,7 +95,7 @@ export const UserCard = () => {
                         <Button
                             type="primary"
                             danger
-                            style={{ width: '100%' }}
+                            style={{width: '100%'}}
                             onClick={handleLogout}
                         >
                             Выйти
