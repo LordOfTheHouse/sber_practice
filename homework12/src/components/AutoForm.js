@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { Card, Button, Input } from 'antd';
-import { useDispatch, useSelector } from "react-redux";
-import { signIn, registration } from "../slices/UserSlice";
-import { RegistrationForm } from "./Registration";
+import React, {useState} from 'react';
+import {Card, Button, Input} from 'antd';
+import {useDispatch, useSelector} from "react-redux";
+import {signIn, registration} from "../slices/UserSlice";
+import {newCart} from "../slices/CartSlice";
+import {RegistrationForm} from "./Registration";
 
 export const AuthForm = () => {
-    const isReg = useSelector((state) => state.user.isReg);
+    const isRegistrationForm = useSelector((state) => state.user.isReg);
+    const currUser = useSelector((state) => state.user.user);
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
@@ -23,8 +25,8 @@ export const AuthForm = () => {
 
     return (
         <>
-            {isReg ? (
-                <RegistrationForm />
+            {isRegistrationForm ? (
+                <RegistrationForm/>
             ) : (
                 <Card
                     hoverable
@@ -36,15 +38,15 @@ export const AuthForm = () => {
                         placeholder="Email"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
-                        style={{ marginBottom: '10px' }}
+                        style={{marginBottom: '10px'}}
                     />
                     <Input.Password
                         placeholder="Password"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
-                        style={{ marginBottom: '10px' }}
+                        style={{marginBottom: '10px'}}
                     />
-                    <Button type="primary" style={{ marginBottom: '10px' }} onClick={handleLogin}>
+                    <Button type="primary" style={{marginBottom: '10px'}} onClick={handleLogin}>
                         Войти
                     </Button>
                     <Button onClick={handleRegister}>Зарегистрироваться</Button>
