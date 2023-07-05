@@ -1,0 +1,28 @@
+POST localhost:8080/products
+Content-Type: application/json
+
+{
+  "name": "Пол дома",
+  "price": 500000,
+  "amount": 3
+}
+
+###
+PUT localhost:8080/products
+Content-Type: application/json
+
+{
+  "id": 2,
+  "name": "Лосось",
+  "price": 500000,
+  "amount": 2
+}
+
+###
+DELETE localhost:8080/products/1
+
+###
+GET localhost:8080/products/1
+
+###
+GET localhost:8080/products
