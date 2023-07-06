@@ -1,0 +1,46 @@
+.card-enter {
+    opacity: 0;
+}
+
+.card-enter-active {
+    opacity: 1;
+    transition: opacity 1s;
+}
+
+.card-exit {
+    opacity: 1;
+}
+
+.card-exit-active {
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+
+.card-container {
+    position: relative;
+    background: linear-gradient(to right, #def205, #24f205, #05f248, #05f2ab);
+    background-size: 400% 100%;
+    animation: gradient-animation 8s linear infinite;
+    padding: 20px;
+    border-radius: 5px;
+}
+
+@keyframes gradient-animation {
+    0% {
+        background-position: 0% 50%;
+    }
+    25% {
+        background-position: 100% 50%;
+    }
+    50% {
+        background-position: 200% 50%;
+    }
+    75% {
+        background-position: 300% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
+

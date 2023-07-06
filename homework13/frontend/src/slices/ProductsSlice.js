@@ -1,5 +1,4 @@
 import {createSlice} from '@reduxjs/toolkit'
-import logo from "../logo.svg"
 
 
 export const productsSlice = createSlice({

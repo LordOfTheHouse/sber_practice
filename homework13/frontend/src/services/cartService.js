@@ -1,6 +1,5 @@
 import axios from "axios";
 import {getUser} from "./userService";
-import {calculateTotal} from "../slices/UserSlice";
 
 const API_URL = "http://localhost:8080/carts";
 

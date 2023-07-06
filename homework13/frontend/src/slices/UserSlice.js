@@ -1,5 +1,4 @@
 import {createSlice} from '@reduxjs/toolkit'
-import ava from "../img/sasha.jpg"
 
 
 export const userSlice = createSlice({
