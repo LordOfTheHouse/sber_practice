@@ -1,7 +1,7 @@
 package com.example.webapplicationexample.service;
 
-import com.example.webapplicationexample.model.Customer;
-import com.example.webapplicationexample.repository.CustomerRepository;
+import com.example.webapplicationexample.model.User;
+import com.example.webapplicationexample.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,37 +14,37 @@ import java.util.Optional;
 @Service
 public class ClientServiceImpl implements ClientService {
 
-    CustomerRepository customerRepository;
+    UserRepository userRepository;
     @Autowired
-    public ClientServiceImpl(CustomerRepository customerRepository) {
-        this.customerRepository = customerRepository;
+    public ClientServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
-    public long save(Customer customer) {
-        return customerRepository.save(customer).getId();
+    public long save(User user) {
+        return userRepository.save(user).getId();
     }
 
     @Override
-    public Optional<Customer> findById(long userId) {
-        return customerRepository.findById(userId);
+    public Optional<User> findById(long userId) {
+        return userRepository.findById(userId);
     }
 
     @Transactional
     @Override
     public boolean deleteById(long userId) {
-        customerRepository.deleteById(userId);
+        userRepository.deleteById(userId);
         return true;
     }
 
     @Override
     public boolean existsById(long userId) {
-        return customerRepository.existsById(userId);
+        return userRepository.existsById(userId);
     }
 
     @Override
-    public Optional<Customer> findByEmail(String email) {
-        return customerRepository.findCustomerByEmail(email);
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findCustomerByEmail(email);
     }
 
 }

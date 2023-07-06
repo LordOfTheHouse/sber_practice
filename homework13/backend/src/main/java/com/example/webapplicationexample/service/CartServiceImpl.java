@@ -2,7 +2,7 @@ package com.example.webapplicationexample.service;
 
 import com.example.webapplicationexample.model.Cart;
 import com.example.webapplicationexample.model.CroppedProduct;
-import com.example.webapplicationexample.model.Customer;
+import com.example.webapplicationexample.model.User;
 import com.example.webapplicationexample.model.Product;
 import com.example.webapplicationexample.repository.CartRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -29,13 +29,13 @@ public class CartServiceImpl implements CartService{
     @Override
     public boolean saveProductInCart(long userId, Product product) {
 
-        Customer customer = new Customer();
-        customer.setId(userId);
-        Optional<Cart> cart = cartRepository.findByProductAndClient(product, customer);
+        User user = new User();
+        user.setId(userId);
+        Optional<Cart> cart = cartRepository.findByProductAndClient(product, user);
         if(cart.isEmpty()){
             Cart newCart = new Cart();
             newCart.setProduct(product);
-            newCart.setClient(customer);
+            newCart.setClient(user);
             newCart.setCount(product.getAmount());
             cartRepository.save(newCart);
         } else {
@@ -47,9 +47,9 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public boolean updateAmountProduct(long userId, Product product) {
-        Customer customer = new Customer();
-        customer.setId(userId);
-        Optional<Cart> cart = cartRepository.findByProductAndClient(product,customer);
+        User user = new User();
+        user.setId(userId);
+        Optional<Cart> cart = cartRepository.findByProductAndClient(product, user);
         if(cart.isPresent()){
             cart.get().setCount(product.getAmount());
             cartRepository.save(cart.get());
@@ -62,9 +62,9 @@ public class CartServiceImpl implements CartService{
     public boolean deleteProductInCart(long idUser, long idProduct) {
         Product product = new Product();
         product.setId(idProduct);
-        Customer customer = new Customer();
-        customer.setId(idUser);
-        Optional<Cart> cart = cartRepository.findByProductAndClient(product, customer);
+        User user = new User();
+        user.setId(idUser);
+        Optional<Cart> cart = cartRepository.findByProductAndClient(product, user);
         if(cart.isEmpty()){
             return false;
         }
@@ -74,10 +74,10 @@ public class CartServiceImpl implements CartService{
 
     @Override
     public List<CroppedProduct> findProductsInCart(long userId) {
-        Customer customer = new Customer();
-        customer.setId(userId);
+        User user = new User();
+        user.setId(userId);
 
-        return cartRepository.findByClient(customer).stream()
+        return cartRepository.findByClient(user).stream()
                 .map(cart -> {
                             CroppedProduct croppedProduct = new CroppedProduct(cart.getProduct());
                             croppedProduct.setAmount(cart.getCount());
@@ -88,8 +88,8 @@ public class CartServiceImpl implements CartService{
     }
 
     @Override
-    public boolean deleteAllClient(Customer customer) {
-        cartRepository.deleteAllByClient(customer);
+    public boolean deleteAllClient(User user) {
+        cartRepository.deleteAllByClient(user);
         return true;
     }
 }

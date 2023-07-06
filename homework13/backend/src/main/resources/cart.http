@@ -1,14 +1,14 @@
 ###
-POST localhost:8080/carts/2
+POST localhost:8080/carts/1
 Content-Type: application/json
 
 {
-  "id": 3,
+  "id": 4,
   "amount": 1
 }
 
 ###
-GET localhost:8080/customers/2
+GET localhost:8080/carts/1
 
 ###
 PUT localhost:8080/carts/1/product/1

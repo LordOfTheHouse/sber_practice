@@ -12,7 +12,7 @@ PUT localhost:8080/products
 Content-Type: application/json
 
 {
-  "id": 2,
+  "id": 11,
   "name": "Лосось",
   "price": 500000,
   "amount": 2

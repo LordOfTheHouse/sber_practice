@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "numberCart": "1111",
-  "idUser": 2,
+  "idUser": 6,
   "promoCode": "sale20"
 
 }

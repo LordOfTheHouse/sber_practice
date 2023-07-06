@@ -5,8 +5,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 /**
  * Корзина
  */
@@ -27,7 +25,7 @@ public class Cart {
 
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
-    private Customer client;
+    private User client;
 
     @Column(nullable = false)
     private int count;
