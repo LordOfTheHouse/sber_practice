@@ -38,7 +38,7 @@ const Cart = () => {
         setSortType(sortType);
     };
 
-    const sortedCart = [...user.cart].sort((a, b) => {
+    const sortedCart = (user.cart?([...user.cart]):[]).sort((a, b) => {
         if (sortType === "nameAZ") {
             return a.name.localeCompare(b.name);
         }
@@ -56,7 +56,7 @@ const Cart = () => {
 
     return (
         <div>
-            {user.cart === undefined || user.cart === [] ? (
+            {(user.cart === undefined || user.cart === []) ? (
                 <Empty description="Корзина пуста" />
             ) : (
                 <div style={{ margin: '0 auto', marginTop: 100 }}>

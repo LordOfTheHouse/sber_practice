@@ -7,6 +7,7 @@ import { AssortmentPage } from "./page/AssortmentPage";
 import { CartPage } from "./page/CartPage";
 import { LogoutPage } from "./page/LogoutPage";
 import { NotFoundPage } from "./page/NotFoundPage";
+import {GachaPage} from "./page/GachaPage.js";
 
 function App() {
     return (
@@ -23,6 +24,9 @@ function App() {
                 </div>
                 <div style={{ textAlign: 'right' }}>
                     <div style={{ padding: '0 10px', display: 'inline-block' }}>
+                        <Link to="/Gacha">Гача</Link>
+                    </div>
+                    <div style={{ padding: '0 10px', display: 'inline-block' }}>
                         <Link to="/">Главная</Link>
                     </div>
                     <div style={{ padding: '0 10px', display: 'inline-block' }}>
@@ -37,6 +41,7 @@ function App() {
             <Content>
                 <Routes>
                     <Route index element={<AssortmentPage />} />
+                    <Route path="/Gacha" element={<GachaPage />} />
                     <Route path="/cartUser" element={<CartPage />} />
                     <Route path="/logout" element={<LogoutPage />} />
                     <Route path="*" element={<NotFoundPage />} />
