@@ -1,17 +1,14 @@
 package com.example.webapplicationexample.controller;
 
 import com.example.webapplicationexample.model.CroppedCustomer;
-import com.example.webapplicationexample.model.Customer;
-import com.example.webapplicationexample.repository.CustomerRepository;
+import com.example.webapplicationexample.model.User;
 import com.example.webapplicationexample.service.CartService;
-import com.example.webapplicationexample.service.CartServiceImpl;
 import com.example.webapplicationexample.service.ClientService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.URI;
 import java.util.Optional;
 
 /**
@@ -33,19 +30,19 @@ public class ClientController {
 
     /**
      * Регистрация пользователя
-     * @param customer - пользователь
+     * @param user - пользователь
      * @return id зарегестрированного пользователя
      */
     @PostMapping
-    public ResponseEntity<?> register(@RequestBody Customer customer) {
-        log.info("Добавление пользователя {}", customer);
-        if(customer.getName() == null
-                || customer.getEmail() == null
-                || customer.getLogin() == null
-                || customer.getPassword() == null){
+    public ResponseEntity<?> register(@RequestBody User user) {
+        log.info("Добавление пользователя {}", user);
+        if(user.getUsername() == null
+                || user.getEmail() == null
+                || user.getUsername() == null
+                || user.getPassword() == null){
             return ResponseEntity.badRequest().body("Введите данные клиента");
         }
-        return ResponseEntity.ok().body(clientService.save(customer));
+        return ResponseEntity.ok().body(clientService.save(user));
     }
 
     /**
@@ -56,7 +53,7 @@ public class ClientController {
     @GetMapping("/{id}")
     public ResponseEntity<CroppedCustomer> getCustomer(@PathVariable Long id) {
         log.info("Поиск пользователя по id {}", id);
-        Optional<Customer> customer = clientService.findById(id);
+        Optional<User> customer = clientService.findById(id);
 
         if (customer.isPresent()) {
             CroppedCustomer croppedCustomer = new CroppedCustomer(customer.get());
@@ -87,7 +84,7 @@ public class ClientController {
     @GetMapping("/email")
     public ResponseEntity<CroppedCustomer> getCustomer(@RequestParam String email) {
         log.info("Поиск продуктов по email {}", email);
-        Optional<Customer> customer = clientService.findByEmail(email);
+        Optional<User> customer = clientService.findByEmail(email);
 
         if (customer.isPresent()) {
             CroppedCustomer croppedCustomer = new CroppedCustomer(customer.get());

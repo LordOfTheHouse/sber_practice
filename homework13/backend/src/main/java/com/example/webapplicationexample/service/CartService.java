@@ -1,7 +1,7 @@
 package com.example.webapplicationexample.service;
 
 import com.example.webapplicationexample.model.CroppedProduct;
-import com.example.webapplicationexample.model.Customer;
+import com.example.webapplicationexample.model.User;
 import com.example.webapplicationexample.model.Product;
 
 import java.util.List;
@@ -14,6 +14,6 @@ public interface CartService {
     boolean updateAmountProduct(long userId, Product product);
     List<CroppedProduct> findProductsInCart(long userId);
 
-    boolean deleteAllClient(Customer customer);
+    boolean deleteAllClient(User user);
     boolean deleteProductInCart(long userId, long productId);
 }

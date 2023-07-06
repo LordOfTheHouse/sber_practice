@@ -1,12 +1,13 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 
+const user = JSON.parse(localStorage.getItem("user"));
 export const userSlice = createSlice({
     name: 'user',
     initialState: {
-        user: {},
+        user: user?user:null,
         isReg: false,
-        isAuth: true,
+        isAuth: !user,
         total: 0
 
     },
@@ -17,20 +18,20 @@ export const userSlice = createSlice({
         setReg: (state, action) => {
             state.isReg = action.payload
         },
-        setAuth: (state, action) => {
-            state.isAuth = action.payload
+
+        login: (state, action) => {
+            state.isAuth = false;
+            state.user = action.payload;
         },
-        calculateTotal: state => {
-            let total = 0;
-            state.user.cart.forEach(item => {
-                total += item.price * item.amount;
-            });
-            state.total = total;
+        logout: (state, action) => {
+            state.isAuth = true;
+            state.user = null;
         }
+
     }
 })
 
 // Action creators are generated for each case reducer function
-export const {calculateTotal, set, setReg, setAuth} = userSlice.actions
+export const {logout, login, set, setReg} = userSlice.actions
 
 export default userSlice.reducer

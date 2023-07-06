@@ -3,10 +3,10 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import productService from "../services/productService";
 import cartService from "../services/cartService";
-import userService from "../services/userService";
 
 export const Product = ({ product }) => {
     const user = useSelector((state) => state.user.user);
+    const isAuth = useSelector((state) => state.user.isAuth);
     const [isEditing, setEditing] = useState(false);
     const [editedPrice, setEditedPrice] = useState(product.price);
     const [editedCount, setEditedCount] = useState(product.amount);
@@ -14,7 +14,7 @@ export const Product = ({ product }) => {
 
     const dispatch = useDispatch()
     const add = () => {
-        if ( user !== undefined) {
+        if ( user !== null) {
             cartService.addProductCart(dispatch, user.id, {
                 id: product.id,
                 name: product.name,
@@ -35,7 +35,10 @@ export const Product = ({ product }) => {
                 amount: editedCount
             };
             productService.updateProduct(dispatch, newProduct);
-            userService.getUser(dispatch, user.id);
+            if(!isAuth){
+                cartService.getCart(dispatch, user.id);
+            }
+
             setEditing(false);
 
         } else {
@@ -45,7 +48,9 @@ export const Product = ({ product }) => {
 
     const removeProduct = () => {
         productService.deleteProduct(dispatch, product.id);
-        userService.getUser(dispatch, user.id);
+        if(!isAuth){
+            cartService.getCart(dispatch, user.id);
+        }
     };
 
     return (

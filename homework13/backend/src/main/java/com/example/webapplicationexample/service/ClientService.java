@@ -1,9 +1,7 @@
 package com.example.webapplicationexample.service;
 
-import com.example.webapplicationexample.model.Customer;
-import com.example.webapplicationexample.model.Product;
+import com.example.webapplicationexample.model.User;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -11,12 +9,12 @@ import java.util.Optional;
  */
 public interface ClientService {
 
-    long save(Customer customer);
+    long save(User user);
 
-    Optional<Customer> findById(long userId);
+    Optional<User> findById(long userId);
     boolean deleteById(long userId);
     boolean existsById(long userId);
 
-    Optional<Customer> findByEmail(String name);
+    Optional<User> findByEmail(String name);
 
 }

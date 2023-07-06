@@ -1,21 +1,30 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Button, Empty, InputNumber } from 'antd';
 import cartService from "../services/cartService";
 import { pay } from "../services/paymentService";
 
+
 const Cart = () => {
     const user = useSelector((state) => state.user.user);
-    const total = useSelector((state) => state.user.total);
+    const isAuth = useSelector((state) => state.user.isAuth);
+    const cart = useSelector((state) => state.cart.cart);
+    const total = useSelector((state) => state.cart.total);
     const dispatch = useDispatch();
-    const [sortType, setSortType] = useState('');
 
+    useEffect(() => {
+        if (!isAuth) {
+            cartService.getCart(dispatch, user.id);
+        }
+
+    }, []);
     const handleRemoveFromCart = (id) => {
+
         cartService.deleteProductCart(dispatch, user.id, id);
     };
 
     const handleClearCart = () => {
-        user.cart.map(productCart => cartService.deleteProductCart(dispatch, user.id, productCart.id));
+        cart.map(productCart => cartService.deleteProductCart(dispatch, user.id, productCart.id));
     };
 
     const handleQuantityChange = (id, quantity) => {
@@ -27,46 +36,22 @@ const Cart = () => {
     };
 
     const handlePayment = () => {
-        pay(dispatch, {
-            "numberCart": "1111",
-            "idUser": user.id,
-            "promoCode": "sale20"
+        pay({
+            numberCart: "1111",
+            idUser: user.id,
+            promoCode: "sale20"
         });
+        cartService.getCart(dispatch, user.id);
     };
 
-    const handleSort = (sortType) => {
-        setSortType(sortType);
-    };
-
-    const sortedCart = (user.cart?([...user.cart]):[]).sort((a, b) => {
-        if (sortType === "nameAZ") {
-            return a.name.localeCompare(b.name);
-        }
-        if (sortType === "nameZA") {
-            return b.name.localeCompare(a.name);
-        }
-        if (sortType === "priceLowToHigh") {
-            return a.price - b.price;
-        }
-        if (sortType === "priceHighToLow") {
-            return b.price - a.price;
-        }
-        return 0;
-    });
 
     return (
         <div>
-            {(user.cart === undefined || user.cart === []) ? (
+            {(cart === []) ? (
                 <Empty description="Корзина пуста" />
             ) : (
                 <div style={{ margin: '0 auto', marginTop: 100 }}>
-                    <div>
-                        <Button onClick={() => handleSort('nameAZ')} style={{ marginRight: '10px' }}>По имени (А-Я)</Button>
-                        <Button onClick={() => handleSort('nameZA')} style={{ marginRight: '10px' }}>По имени (Я-А)</Button>
-                        <Button onClick={() => handleSort('priceLowToHigh')} style={{ marginRight: '10px' }}>По цене (вверх)</Button>
-                        <Button onClick={() => handleSort('priceHighToLow')} style={{ marginRight: '10px' }}>По цене (вниз)</Button>
-                    </div>
-                    {sortedCart.map(({ id, name, price, amount }) => (
+                    {cart.map(({ id, name, price, amount }) => (
                         <div key={id}>
                             <p>Название: {name}</p>
                             <p>Цена: {price}</p>

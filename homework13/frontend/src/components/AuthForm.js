@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { Card, Button, Input } from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { RegistrationForm } from "./Registration";
-import userService from "../services/userService";
-import { setAuth, setReg } from "../slices/UserSlice";
+import {setAuth, setReg, login} from "../slices/UserSlice";
+import authService from "../services/authService";
 
 export const AuthForm = () => {
     const isRegistrationForm = useSelector((state) => state.user.isReg);
@@ -12,13 +12,15 @@ export const AuthForm = () => {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
 
+
     const handleLogin = () => {
-        userService.signIn(dispatch, name);
-        if (currUser) {
-            dispatch(setAuth(false));
-        } else {
-            alert("Неправильный логин или пароль");
-        }
+        authService.login({
+            username:name,
+            password:password
+        }).then(user=>{
+            dispatch(login(user));
+        });
+
     };
 
     const handleRegister = () => {
@@ -44,6 +46,12 @@ export const AuthForm = () => {
                 >
                     <Input
                         placeholder="Email"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your Username!',
+                            },
+                        ]}
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         style={{ marginBottom: '10px' }}
@@ -51,6 +59,12 @@ export const AuthForm = () => {
                     <Input.Password
                         placeholder="Password"
                         value={password}
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Please input your password!',
+                            },
+                        ]}
                         onChange={(e) => setPassword(e.target.value)}
                         style={{ marginBottom: '10px' }}
                     />

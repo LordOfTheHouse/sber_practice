@@ -1,24 +1,21 @@
 import React, { useState } from 'react';
 import { Card, Button, Input } from 'antd';
 import { useDispatch } from 'react-redux';
-import userService from "../services/userService";
-import { setReg, setAuth } from "../slices/UserSlice";
-
+import { setReg } from "../slices/UserSlice";
+import authService from "../services/authService";
 export const RegistrationForm = () => {
-    const [name, setName] = useState('');
-    const [login, setLogin] = useState('');
+    const [username, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
 
     const createAccount = () => {
-        userService.createUser(dispatch, {
-            name: name,
-            login: login,
+
+        authService.register({
+            username: username,
             email: email,
             password: password
         });
-        dispatch(setAuth(false));
         dispatch(setReg(false));
     };
 
@@ -46,15 +43,10 @@ export const RegistrationForm = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 style={{ marginBottom: '10px', width: '100%' }}
             />
+
             <Input
-                placeholder="Login"
-                value={login}
-                onChange={(e) => setLogin(e.target.value)}
-                style={{ marginBottom: '10px', width: '100%' }}
-            />
-            <Input
-                placeholder="Имя"
-                value={name}
+                placeholder="Username"
+                value={username}
                 onChange={(e) => setName(e.target.value)}
                 style={{ marginBottom: '10px', width: '100%' }}
             />

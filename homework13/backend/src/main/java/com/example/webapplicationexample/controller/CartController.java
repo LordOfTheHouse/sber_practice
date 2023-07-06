@@ -1,16 +1,17 @@
 package com.example.webapplicationexample.controller;
 
-import com.example.webapplicationexample.model.Customer;
-import com.example.webapplicationexample.model.Product;
+import com.example.webapplicationexample.model.*;
 import com.example.webapplicationexample.service.CartService;
 import com.example.webapplicationexample.service.ClientService;
 import com.example.webapplicationexample.service.ProductService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -39,6 +40,7 @@ public class CartController {
      * @param product - продукт
      * @return корзину после изменений
      */
+    @PreAuthorize("hasRole('USER') or hasRole('User')")
     @PostMapping("/{idUser}")
     public ResponseEntity<?> addProduct(@PathVariable long idUser, @RequestBody Product product) {
         log.info("Добавление продукта {} в корзину", product);
@@ -66,6 +68,7 @@ public class CartController {
      * @param product - продукт
      * @return корзину после изменений
      */
+    @PreAuthorize("hasRole('USER') or hasRole('User')")
     @PutMapping("/{idUser}/product/{idProduct}")
     public ResponseEntity<?> updateAmount(@PathVariable long idUser, @PathVariable long idProduct,
                                           @RequestBody Product product) {
@@ -93,10 +96,11 @@ public class CartController {
      * @param productId - индификатор продукта
      * @return корзину после изменений
      */
+    @PreAuthorize("hasRole('USER') or hasRole('User')")
     @DeleteMapping("/{idCart}/products/{productId}")
     public ResponseEntity<?> deleteProduct(@PathVariable long idCart, @PathVariable long productId) {
         log.info("Удаление продукта {} из корзины", productId);
-        Optional<Customer> customer = clientService.findById(idCart);
+        Optional<User> customer = clientService.findById(idCart);
         Optional<Product> product = productService.findById(productId);
         if(customer.isEmpty() || product.isEmpty()){
             return ResponseEntity.notFound().build();
@@ -109,5 +113,13 @@ public class CartController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<List<CroppedProduct>> getCustomer(@PathVariable Long id) {
+        log.info("Поиск корзины по id {}", id);
+        List<CroppedProduct> cart = cartService.findProductsInCart(id);
+        return ResponseEntity.ok().body(cart);
+
     }
 }

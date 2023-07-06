@@ -1,10 +1,12 @@
 import axios from "axios";
 import {set} from "../slices/ProductsSlice";
+import authHeader from "./authHeader";
+import {API_URL} from "./API_URL";
 
-const API_URL = "http://localhost:8080/products";
+const API_URL_PRODUCT = API_URL + "products"
 
 const getProducts = (dispatch) => {
-    return axios.get(API_URL).then(
+    return axios.get(API_URL_PRODUCT).then(
         (response) => {
             dispatch(set(response.data));
         },
@@ -18,7 +20,7 @@ const getProducts = (dispatch) => {
 };
 
 const getProductsName = (dispatch, name) => {
-    return axios.get(`${API_URL}?name=${name}`).then(
+    return axios.get(`${API_URL_PRODUCT}?name=${name}`).then(
         (response) => {
             dispatch(set(response.data));
         },
@@ -31,7 +33,7 @@ const getProductsName = (dispatch, name) => {
         });
 };
 const getProductsId = (dispatch, id) => {
-    return axios.get(API_URL + `/${id}`).then(
+    return axios.get(API_URL_PRODUCT + `/${id}`).then(
         (response) => {
             dispatch(set(response.data));
         },
@@ -44,7 +46,7 @@ const getProductsId = (dispatch, id) => {
         });
 };
 export const createProduct = ( dispatch, product) => {
-    return axios.post(API_URL, product).then(
+    return axios.post(API_URL_PRODUCT, product,  {headers: authHeader()}).then(
         (response) => {
             getProducts(dispatch)
         },
@@ -58,7 +60,7 @@ export const createProduct = ( dispatch, product) => {
 };
 
 const updateProduct = (dispatch, product) => {
-    return axios.put(API_URL, product).then(
+    return axios.put(API_URL_PRODUCT, product, {headers: authHeader()}).then(
         (response) => {
             getProducts(dispatch)
         },
@@ -72,7 +74,7 @@ const updateProduct = (dispatch, product) => {
 };
 
 const deleteProduct = (dispatch, id) => {
-    return axios.delete(API_URL + `/${id}`).then(
+    return axios.delete(API_URL_PRODUCT + `/${id}`, {headers: authHeader()}).then(
         (response) => {
             getProducts(dispatch)
         },

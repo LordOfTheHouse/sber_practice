@@ -1,15 +1,13 @@
 import axios from "axios";
-import {getUser} from "./userService";
 import { message } from 'antd';
+import authHeader from "./authHeader";
+import {API_URL} from "./API_URL";
 
-
-const API_URL = "http://localhost:8080/payment";
-
-export const pay = (dispatch, transfer) => {
-    return axios.post(API_URL, transfer).then(
+const API_URL_PAYMENT = API_URL + "payment"
+export const pay = (transfer) => {
+    return axios.post(API_URL_PAYMENT, transfer, {headers: authHeader()}).then(
         (response) => {
-            message.info("Ооплата прошла успешно "+response.data);
-            getUser(dispatch, transfer.idUser)
+            message.info("Оплата прошла успешно "+response.data);
         },
         (error) => {
             const _content = (error.response && error.response.data) ||

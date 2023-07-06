@@ -17,10 +17,10 @@ public class CroppedCustomer{
     private List<CroppedProduct> cart;
     private String image;
 
-    public CroppedCustomer(Customer customer){
-        this.id = customer.getId();
-        this.email = customer.getEmail();
-        this.name = customer.getName();
+    public CroppedCustomer(User user){
+        this.id = user.getId();
+        this.email = user.getEmail();
+        this.name = user.getUsername();
         this.cart = new ArrayList<>();
         this.image = "http://esc.volnc.ru/uploads/user_photo/6ce4341561-rapakov.jpg";
     }
