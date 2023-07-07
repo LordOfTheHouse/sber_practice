@@ -126,7 +126,7 @@ public class PaymentRealiseService implements PaymentService{
     private Predicate<CroppedProduct> checkAvailabilityAmountInHomework() {
         return product -> {
             log.info("{} {}", productService.findById(product.getId()).get().getAmount(), product.getAmount());
-            return productService.findById(product.getId()).get().getAmount() > product.getAmount();
+            return productService.findById(product.getId()).get().getAmount() >= product.getAmount();
         };
     }
 

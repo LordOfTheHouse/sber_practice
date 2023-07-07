@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import put from '../img/put.jpeg';
 import authService from '../services/authService'
 import { logout } from "../slices/UserSlice";
-import {set} from "../slices/CartSlice";
+import {set, setPercent} from "../slices/CartSlice";
 
 export const UserCard = () => {
 
@@ -14,6 +14,7 @@ export const UserCard = () => {
     const handleLogout = () => {
         authService.logout();
         dispatch(logout());
+        setPercent(100);
         set([]);
     };
 

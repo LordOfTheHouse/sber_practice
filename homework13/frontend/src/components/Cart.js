@@ -1,9 +1,10 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {Button, Empty, InputNumber, message} from 'antd';
-import { set, calculateTotal } from '../slices/CartSlice';
+import {Button, Empty, Input, InputNumber, message} from 'antd';
+import {set, calculateTotal, setPercent} from '../slices/CartSlice';
 import cartService from "../services/cartService";
 import { pay } from "../services/paymentService";
+import promocodeService from "../services/promocodesService";
 
 
 const Cart = () => {
@@ -12,6 +13,7 @@ const Cart = () => {
     const cart = useSelector((state) => state.cart.cart);
     const total = useSelector((state) => state.cart.total);
     const dispatch = useDispatch();
+    const [promoCode, setPromoCode] = useState('');
 
     useEffect(() => {
         if (!isAuth) {
@@ -55,11 +57,18 @@ const Cart = () => {
         pay({
             numberCart: "1111",
             idUser: user.id,
-            promoCode: "sale20"
+            promoCode: promoCode
         });
         dispatch(set([]));
-        dispatch(calculateTotal([]));
+        dispatch(setPercent(100));
+        dispatch(calculateTotal());
+        setPromoCode("");
     };
+
+    const handleActivatePromoCode = ()=>{
+        promocodeService.getPromocodes(dispatch, promoCode);
+        dispatch(calculateTotal());
+    }
 
 
     return (
@@ -91,6 +100,15 @@ const Cart = () => {
                     <div>Общая стоимость: {total}</div>
                     <Button onClick={handleClearCart} style={{ marginRight: '10px' }}>Очистить корзину</Button>
                     <Button onClick={handlePayment}>Оплатить</Button>
+                    <div style={{ padding: '10px' }}>
+                        <Input
+                            value={promoCode}
+                            placeholder="Введите промокод"
+                            onChange={(value) => setPromoCode(value.target.value)}
+                            style={{ width:'100px', marginRight:'20px' }}
+                        />
+                        <Button onClick={handleActivatePromoCode}>Активировать</Button>
+                    </div>
                 </div>
             )}
         </div>
