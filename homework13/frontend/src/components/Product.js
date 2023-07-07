@@ -84,9 +84,9 @@ export const Product = ({ product }) => {
             />
 
             <div style={{ marginTop: '16px' }}>
-                <Button type="primary" style={{ marginRight: '8px', width: '100%' }} onClick={add}>
+                {(user && (user.roles.includes( "ROLE_USER") || user.roles.includes( "ROLE_ADMIN"))) &&<Button type="primary" style={{ marginRight: '8px', width: '100%' }} onClick={add}>
                     Добавить в корзину
-                </Button>
+                </Button>}
             </div>
 
             <div style={{
@@ -94,12 +94,12 @@ export const Product = ({ product }) => {
                 justifyContent: 'center',
                 marginTop: '8px'
             }}>
-                <Button style={{ marginRight: '8px' }} onClick={editProduct}>
+                {(user && user.roles.includes( "ROLE_ADMIN")) &&<Button style={{ marginRight: '8px' }} onClick={editProduct}>
                     {isEditing ? 'Сохранить' : 'Изменить'}
-                </Button>
-                <Button onClick={removeProduct}>
+                </Button>}
+                {(user && user.roles.includes( "ROLE_ADMIN")) &&<Button onClick={removeProduct}>
                     Удалить
-                </Button>
+                </Button>}
             </div>
         </Card>
     );

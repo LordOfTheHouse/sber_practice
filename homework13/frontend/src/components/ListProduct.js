@@ -7,6 +7,7 @@ import { useMediaQuery } from 'react-responsive';
 import { useEffect } from "react";
 
 export const ListProduct = () => {
+    const user = useSelector((state) => state.user.user);
     const productList = useSelector((state) => state.products.products);
     const dispatch = useDispatch();
 
@@ -44,9 +45,9 @@ export const ListProduct = () => {
                 ))}
             </Row>
             <div style={{ display: 'flex', justifyContent: 'center', padding: '20px' }}>
-                <Button type="primary" onClick={addNewProduct}>
+                {(user && user.roles.includes( "ROLE_ADMIN")) && <Button type="primary" onClick={addNewProduct}>
                     Добавить товар
-                </Button>
+                </Button>}
             </div>
         </div>
     );
