@@ -43,16 +43,6 @@ const Cart = () => {
         cartService.updateProductIntCart(dispatch, user.id, newProduct);
     };
 
-    const handleSortByName = () => {
-        const sortedCart = [...cart].sort((a, b) => a.name.localeCompare(b.name));
-        dispatch(set(sortedCart));
-    };
-
-    const handleSortByPrice = () => {
-        const sortedCart = [...cart].sort((a, b) => a.price - b.price);
-        dispatch(set(sortedCart));
-    };
-
     const handlePayment = () => {
         pay({
             numberCart: "1111",
@@ -77,10 +67,6 @@ const Cart = () => {
                 <Empty description="Корзина пуста" />
             ) : (
                 <div style={{ margin: '0 auto', marginTop: 100 }}>
-                    <div style={{ marginBottom: '10px' }}>
-                        <Button onClick={handleSortByName} style={{ marginRight: '10px' }}>Сортировать по алфавиту</Button>
-                        <Button onClick={handleSortByPrice}>Сортировать по цене</Button>
-                    </div>
                     {cart.map(({ id, name, price, amount }) => (
                         <div key={id}>
                             <p>Название: {name}</p>
