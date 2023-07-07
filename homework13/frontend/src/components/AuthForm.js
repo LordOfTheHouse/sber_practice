@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
-import { Card, Button, Input } from 'antd';
+import {Card, Button, Input, message} from 'antd';
 import { useDispatch, useSelector } from "react-redux";
 import { RegistrationForm } from "./Registration";
-import {setAuth, setReg, login} from "../slices/UserSlice";
+import {setReg, login} from "../slices/UserSlice";
 import authService from "../services/authService";
 
 export const AuthForm = () => {
     const isRegistrationForm = useSelector((state) => state.user.isReg);
-    const currUser = useSelector((state) => state.user.user);
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
@@ -19,7 +18,13 @@ export const AuthForm = () => {
             password:password
         }).then(user=>{
             dispatch(login(user));
-        });
+        }, (error) => {
+                const _content = (error.response && error.response.data) ||
+                    error.message ||
+                    error.toString();
+                console.log(_content);
+                message.error("Неправильный логин или пароль");
+            });
 
     };
 

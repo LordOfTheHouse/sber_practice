@@ -14,7 +14,7 @@ import kruti from "../img/Gacha-Life-Logo.png";
 export const GachaPage = () => {
     const [showCard, setShowCard] = useState(false);
     const [randomImage, setRandomImage] = useState(null);
-
+    const [randomPromo, setRandomPromo] = useState(null);
     const images = [
         rose,
         sasha,
@@ -24,11 +24,18 @@ export const GachaPage = () => {
         svet,
         team
     ];
+    const promocodes = [
+        "ZERO",
+        "ONE",
+        "TWO",
+        "THREE",
+    ];
 
     const handleButtonClick = () => {
         if (!showCard) {
             setShowCard(true);
             setRandomImage(images[Math.floor(Math.random() * images.length)]);
+            setRandomPromo(promocodes[Math.floor(Math.random() * promocodes.length)])
         }
     };
 
@@ -57,6 +64,9 @@ export const GachaPage = () => {
                             className="card-content"
                         >
                             <p>Бесценно</p>
+                            {randomPromo && (
+                                <p> {randomPromo}</p>
+                            )}
                             {randomImage && (
                                 <img src={randomImage} alt="Изображение товара" style={{ maxWidth: '100%', maxHeight: '200px', margin: '0 auto' }} />
                             )}

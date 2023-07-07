@@ -1,4 +1,4 @@
-import { Card, Button, InputNumber, Input } from 'antd';
+import {Card, Button, InputNumber, Input, message} from 'antd';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 import productService from "../services/productService";
@@ -14,7 +14,7 @@ export const Product = ({ product }) => {
 
     const dispatch = useDispatch()
     const add = () => {
-        if ( user !== null) {
+        if ( !isAuth) {
             cartService.addProductCart(dispatch, user.id, {
                 id: product.id,
                 name: product.name,
@@ -22,11 +22,15 @@ export const Product = ({ product }) => {
                 amount: 1,
             });
         } else {
-            alert("User not found")
+            message.error("User not found")
         }
     };
 
     const editProduct = () => {
+        if ( isAuth) {
+            message.error("User not found");
+            return;
+        }
         if (isEditing) {
             const newProduct = {
                 id: product.id,
@@ -47,10 +51,13 @@ export const Product = ({ product }) => {
     };
 
     const removeProduct = () => {
-        productService.deleteProduct(dispatch, product.id);
-        if(!isAuth){
-            cartService.getCart(dispatch, user.id);
+        if ( isAuth) {
+            message.error("User not found");
+            return;
         }
+        productService.deleteProduct(dispatch, product.id);
+        cartService.getCart(dispatch, user.id);
+
     };
 
     return (
