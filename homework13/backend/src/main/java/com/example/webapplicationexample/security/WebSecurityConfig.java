@@ -41,6 +41,8 @@ public class WebSecurityConfig {
                                 .requestMatchers(HttpMethod.GET, "/products/**").permitAll()
                                 .requestMatchers(HttpMethod.GET, "/carts/**").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/carts/**").permitAll()
+                                .requestMatchers(HttpMethod.GET, "/promocodes/**").permitAll()
+                                .requestMatchers(HttpMethod.OPTIONS, "/promocodes/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/payment/**").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/payment/**").permitAll()
                                 .requestMatchers(HttpMethod.OPTIONS, "/products/**").permitAll()

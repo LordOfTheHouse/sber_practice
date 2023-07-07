@@ -2,6 +2,7 @@ import axios from "axios";
 import {set} from "../slices/ProductsSlice";
 import authHeader from "./authHeader";
 import {API_URL} from "./API_URL";
+import {message} from "antd";
 
 const API_URL_PRODUCT = API_URL + "products"
 
@@ -14,7 +15,7 @@ const getProducts = (dispatch) => {
             const _content = (error.response && error.response.data) ||
                 error.message ||
                 error.toString();
-            console.error(_content)
+            message.error(_content)
             dispatch(set([]));
         });
 };
@@ -28,20 +29,20 @@ const getProductsName = (dispatch, name) => {
             const _content = (error.response && error.response.data) ||
                 error.message ||
                 error.toString();
-            console.error(_content)
+            message.error(_content)
             dispatch(set([]));
         });
 };
 const getProductsId = (dispatch, id) => {
     return axios.get(API_URL_PRODUCT + `/${id}`).then(
         (response) => {
-            dispatch(set(response.data));
+            dispatch(set([response.data]));
         },
         (error) => {
             const _content = (error.response && error.response.data) ||
                 error.message ||
                 error.toString();
-            console.error(_content)
+            message.error(_content)
             dispatch(set([]));
         });
 };
@@ -54,8 +55,8 @@ export const createProduct = ( dispatch, product) => {
             const _content = (error.response && error.response.data) ||
                 error.message ||
                 error.toString();
-
-            console.error(_content)
+            console.error(_content);
+            message.error("недостаточно прав доступа");
         });
 };
 
@@ -68,8 +69,8 @@ const updateProduct = (dispatch, product) => {
             const _content = (error.response && error.response.data) ||
                 error.message ||
                 error.toString();
-
-            console.error(_content)
+            console.error(_content);
+            message.error("недостаточно прав доступа");
         });
 };
 
@@ -82,8 +83,8 @@ const deleteProduct = (dispatch, id) => {
             const _content = (error.response && error.response.data) ||
                 error.message ||
                 error.toString();
-
-            console.error(_content)
+            console.error(_content);
+            message.error("недостаточно прав доступа");
         });
 };
 

@@ -35,7 +35,7 @@ public class ProductController {
      * @param product информация о продукте
      * @return id нового продукта
      */
-    @PreAuthorize("hasRole('ADMIN') or hasRole('User')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> addProduct(@RequestBody Product product) {
         log.info("Добавление продукта {}", product);
@@ -88,7 +88,7 @@ public class ProductController {
      * @param product - информация о продукте
      * @return новый продукт
      */
-    @PreAuthorize("hasRole('ADMIN') or hasRole('User')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping
     public ResponseEntity<?> updateProduct(@RequestBody Product product) {
         log.info("Обновляет информацию о продукте: {}", product);
@@ -104,7 +104,7 @@ public class ProductController {
      * @param id - индификатор
      * @return возвращает статус операции
      */
-    @PreAuthorize("hasRole('ADMIN') or hasRole('User')")
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteProduct(@PathVariable long id) {
         log.info("Удаление продукта по id: {}", id);

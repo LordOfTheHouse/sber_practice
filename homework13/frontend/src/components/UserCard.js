@@ -1,7 +1,8 @@
 import React from 'react';
 import { Card, Button} from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-
+import put from '../img/put.jpeg';
+import authService from '../services/authService'
 import { logout } from "../slices/UserSlice";
 import {set} from "../slices/CartSlice";
 
@@ -11,6 +12,7 @@ export const UserCard = () => {
     const dispatch = useDispatch();
 
     const handleLogout = () => {
+        authService.logout();
         dispatch(logout());
         set([]);
     };
@@ -27,7 +29,7 @@ export const UserCard = () => {
                         margin: '0 auto',
                         marginTop: 100,
                     }}
-                    cover={<img alt="example" src={user.image} style={{ borderRadius: '10px 10px 0 0' }} />}
+                    cover={<img alt="example" src={put} style={{ borderRadius: '10px 10px 0 0' }} />}
                 >
                     <Card.Meta
                         title={<h3 style={{ marginBottom: '10px' }}>{user.username}</h3>}

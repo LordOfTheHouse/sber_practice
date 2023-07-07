@@ -14,7 +14,7 @@ const Search = () => {
     };
 
     const onSelect = (value) => {
-        productService.getProductsName(dispatch,value);
+        productService.getProductsId(dispatch,value);
     };
 
     const searchResult = (query) => {
